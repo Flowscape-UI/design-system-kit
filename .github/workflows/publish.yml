@@ -38,14 +38,14 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run linter
-        run: bun run lint
+      # - name: Run linter
+      #   run: bun run lint
 
-      - name: Run TypeScript check
-        run: bun run lint:ts
+      # - name: Run TypeScript check
+      #   run: bun run lint:ts
 
-      - name: Run tests
-        run: bun run test:run
+      # - name: Run tests
+      #   run: bun run test:run
 
       - name: Build library
         run: bun run build

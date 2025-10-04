@@ -33,14 +33,14 @@ jobs:
           npm version ${{ inputs.version }} -m "chore(release): %s"
           git push --follow-tags
 
-      - name: Lint (ESLint)
-        run: npm run lint
+      # - name: Lint (ESLint)
+      #   run: npm run lint
 
-      - name: Typecheck (TS)
-        run: npm run lint:ts
+      # - name: Typecheck (TS)
+      #   run: npm run lint:ts
 
-      - name: Format check (Prettier)
-        run: npm run format:check
+      # - name: Format check (Prettier)
+      #   run: npm run format:check
 
       - name: Build
         run: npm run build

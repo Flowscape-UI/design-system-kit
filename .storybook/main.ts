@@ -16,9 +16,8 @@ const config: StorybookConfig = {
       ...(cfg.resolve || {}),
       dedupe: [...((cfg.resolve || {}).dedupe || []), "react", "react-dom"],
     };
-    // Important for GitHub Pages project pages: prefix asset URLs with repo name
-    // If your repo name differs, change "/color-picker/" accordingly or use an env var
-    cfg.base = "/color-picker/";
+    // Note: When using GitHub Actions deploy, base path is set automatically by actions/configure-pages
+    // No need to manually set cfg.base here
     return cfg;
   },
 };

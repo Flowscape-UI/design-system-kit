@@ -1,14 +1,18 @@
 /* eslint-disable react/jsx-no-leaked-render */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react'
-import { SlidersIcon, InputsIcon, PaletteIcon } from './icon'
-import { usePicker } from '../context'
-import EyeDropper from './eye-dropper'
-import AdvancedControls from './advanced-controls'
-import ComparibleColors from './ComparibleColors'
-import GradientControls from './GradientControls'
-import { LocalesProps } from '../shared/types'
-import { colorTypeBtnStyles, controlBtnStyles, modalBtnStyles } from '../styles/styles'
+import React, { useState } from "react";
+import { SlidersIcon, InputsIcon, PaletteIcon } from "./icon";
+import { usePicker } from "../context";
+import EyeDropper from "./eye-dropper";
+import AdvancedControls from "./advanced-controls";
+import ComparibleColors from "./ComparibleColors";
+import GradientControls from "./GradientControls";
+import type { LocalesProps } from "../shared/types";
+import {
+  colorTypeBtnStyles,
+  controlBtnStyles,
+  modalBtnStyles,
+} from "../styles/styles";
 
 const ColorTypeBtns = ({
   hideColorTypeBtns,
@@ -17,22 +21,22 @@ const ColorTypeBtns = ({
   setSolid,
   locales,
 }: {
-  hideColorTypeBtns?: boolean
-  isGradient?: boolean
-  setSolid: () => void
-  setGradient: () => void
-  locales?: LocalesProps
+  hideColorTypeBtns?: boolean;
+  isGradient?: boolean;
+  setSolid: () => void;
+  setGradient: () => void;
+  locales?: LocalesProps;
 }) => {
-  const { defaultStyles, pickerIdSuffix } = usePicker()
+  const { defaultStyles, pickerIdSuffix } = usePicker();
 
   if (hideColorTypeBtns) {
-    return <div style={{ width: 1 }} />
+    return <div style={{ width: 1 }} />;
   } else {
     return (
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center",
           ...defaultStyles.rbgcpControlBtnWrapper,
         }}
         id={`rbgcp-color-type-btns${pickerIdSuffix}`}
@@ -54,42 +58,43 @@ const ColorTypeBtns = ({
           {locales?.CONTROLS?.GRADIENT}
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
 const InputTypeDropdown = ({
   openInputType,
   setOpenInputType,
 }: {
-  openInputType?: boolean
-  setOpenInputType: (arg0: boolean) => void
+  openInputType?: boolean;
+  setOpenInputType: (arg0: boolean) => void;
 }) => {
-  const { inputType, setInputType, defaultStyles, pickerIdSuffix } = usePicker()
+  const { inputType, setInputType, defaultStyles, pickerIdSuffix } =
+    usePicker();
   const vTrans = openInputType
-    ? 'visibility 0ms linear'
-    : 'visibility 100ms linear 150ms'
+    ? "visibility 0ms linear"
+    : "visibility 100ms linear 150ms";
   const zTrans = openInputType
-    ? 'z-index 0ms linear'
-    : 'z-index 100ms linear 150ms'
+    ? "z-index 0ms linear"
+    : "z-index 100ms linear 150ms";
   const oTrans = openInputType
-    ? 'opacity 120ms linear'
-    : 'opacity 150ms linear 50ms'
+    ? "opacity 120ms linear"
+    : "opacity 150ms linear 50ms";
 
   const handleInputType = (e: any, val: string) => {
     if (openInputType) {
-      e.stopPropagation()
-      setInputType(val)
-      setOpenInputType(false)
+      e.stopPropagation();
+      setInputType(val);
+      setOpenInputType(false);
     }
-  }
+  };
 
   return (
     <div
       // className="rbgcp-color-model-dropdown"
       style={{
-        visibility: openInputType ? 'visible' : 'hidden',
-        zIndex: openInputType ? '' : -100,
+        visibility: openInputType ? "visible" : "hidden",
+        zIndex: openInputType ? "" : -100,
         opacity: openInputType ? 1 : 0,
         transition: `${oTrans}, ${vTrans}, ${zTrans}`,
         ...defaultStyles.rbgcpColorModelDropdown,
@@ -98,35 +103,35 @@ const InputTypeDropdown = ({
     >
       <div
         id={`rbgcp-color-model-rgb-btn${pickerIdSuffix}`}
-        onClick={(e) => handleInputType(e, 'rgb')}
-        style={modalBtnStyles(inputType === 'rgb', defaultStyles)}
+        onClick={(e) => handleInputType(e, "rgb")}
+        style={modalBtnStyles(inputType === "rgb", defaultStyles)}
       >
         RGB
       </div>
       <div
         id={`rbgcp-color-model-hsl-btn${pickerIdSuffix}`}
-        onClick={(e) => handleInputType(e, 'hsl')}
-        style={modalBtnStyles(inputType === 'hsl', defaultStyles)}
+        onClick={(e) => handleInputType(e, "hsl")}
+        style={modalBtnStyles(inputType === "hsl", defaultStyles)}
       >
         HSL
       </div>
       <div
         id={`rbgcp-color-model-hsv-btn${pickerIdSuffix}`}
-        onClick={(e) => handleInputType(e, 'hsv')}
-        style={modalBtnStyles(inputType === 'hsv', defaultStyles)}
+        onClick={(e) => handleInputType(e, "hsv")}
+        style={modalBtnStyles(inputType === "hsv", defaultStyles)}
       >
         HSV
       </div>
       <div
         id={`rbgcp-color-model-cmyk-btn${pickerIdSuffix}`}
-        onClick={(e) => handleInputType(e, 'cmyk')}
-        style={modalBtnStyles(inputType === 'cmyk', defaultStyles)}
+        onClick={(e) => handleInputType(e, "cmyk")}
+        style={modalBtnStyles(inputType === "cmyk", defaultStyles)}
       >
         CMYK
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Controls = ({
   locales,
@@ -140,41 +145,48 @@ const Controls = ({
   hideGradientAngle = false,
   hideGradientStop = false,
 }: {
-  locales?: LocalesProps
-  hideEyeDrop?: boolean
-  hideAdvancedSliders?: boolean
-  hideColorGuide?: boolean
-  hideInputType?: boolean
-  hideColorTypeBtns?: boolean
-  hideGradientControls?: boolean
-  hideGradientType?: boolean
-  hideGradientAngle?: boolean
-  hideGradientStop?: boolean
+  locales?: LocalesProps;
+  hideEyeDrop?: boolean;
+  hideAdvancedSliders?: boolean;
+  hideColorGuide?: boolean;
+  hideInputType?: boolean;
+  hideColorTypeBtns?: boolean;
+  hideGradientControls?: boolean;
+  hideGradientType?: boolean;
+  hideGradientAngle?: boolean;
+  hideGradientStop?: boolean;
 }) => {
-  const { config, onChange, isGradient, handleChange, previous, defaultStyles, pickerIdSuffix } =
-    usePicker()
-  const { defaultColor, defaultGradient } = config
-  const [openComparibles, setOpenComparibles] = useState(false)
-  const [openInputType, setOpenInputType] = useState(false)
-  const [openAdvanced, setOpenAdvanced] = useState(false)
+  const {
+    config,
+    onChange,
+    isGradient,
+    handleChange,
+    previous,
+    defaultStyles,
+    pickerIdSuffix,
+  } = usePicker();
+  const { defaultColor, defaultGradient } = config;
+  const [openComparibles, setOpenComparibles] = useState(false);
+  const [openInputType, setOpenInputType] = useState(false);
+  const [openAdvanced, setOpenAdvanced] = useState(false);
 
   const noTools =
-    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType
+    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType;
 
-  const solidColor = previous?.color ?? defaultColor
-  const gradientColor = previous?.gradient ?? defaultGradient
+  const solidColor = previous?.color ?? defaultColor;
+  const gradientColor = previous?.gradient ?? defaultGradient;
 
   const setSolid = () => {
-    onChange(solidColor)
-  }
+    onChange(solidColor);
+  };
 
   const setGradient = () => {
-    onChange(gradientColor)
-  }
+    onChange(gradientColor);
+  };
 
   const allRightControlsHidden =
-    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType
-  const allControlsHidden = allRightControlsHidden && hideColorTypeBtns
+    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType;
+  const allControlsHidden = allRightControlsHidden && hideColorTypeBtns;
 
   if (allControlsHidden) {
     if (isGradient && !hideGradientControls) {
@@ -184,19 +196,19 @@ const Controls = ({
           hideGradientAngle={hideGradientAngle}
           hideGradientStop={hideGradientStop}
         />
-      )
+      );
     } else {
-      return null
+      return null;
     }
   } else {
     return (
       <div style={{ paddingBottom: 4 }}>
         <div
           style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
           id={`rbgcp-controls-wrapper${pickerIdSuffix}`}
           // className="rbgcp-controls-wrapper"
@@ -212,7 +224,7 @@ const Controls = ({
           {!allRightControlsHidden && (
             <div
               style={{
-                display: noTools ? 'none' : '',
+                display: noTools ? "none" : "",
                 ...defaultStyles.rbgcpControlBtnWrapper,
               }}
               id={`rbgcp-control-rightside-wrapper${pickerIdSuffix}`}
@@ -226,7 +238,7 @@ const Controls = ({
                   // className="rbgcp-control-btn rbgcp-advanced-btn"
                   style={controlBtnStyles(openAdvanced, defaultStyles)}
                 >
-                  <SlidersIcon color={openAdvanced ? '#568CF5' : ''} />
+                  <SlidersIcon color={openAdvanced ? "#568CF5" : ""} />
                 </div>
               )}
               {!hideColorGuide && (
@@ -236,7 +248,7 @@ const Controls = ({
                   // className="rbgcp-control-btn rbgcp-comparibles-btn"
                   id={`rbgcp-comparibles-btn${pickerIdSuffix}`}
                 >
-                  <PaletteIcon color={openComparibles ? '#568CF5' : ''} />
+                  <PaletteIcon color={openComparibles ? "#568CF5" : ""} />
                 </div>
               )}
               {!hideInputType && (
@@ -246,7 +258,7 @@ const Controls = ({
                   // className="rbgcp-control-btn rbgcp-color-model-btn"
                   style={controlBtnStyles(openInputType, defaultStyles)}
                 >
-                  <InputsIcon color={openInputType ? '#568CF5' : ''} />
+                  <InputsIcon color={openInputType ? "#568CF5" : ""} />
                   <InputTypeDropdown
                     openInputType={openInputType}
                     setOpenInputType={setOpenInputType}
@@ -270,8 +282,8 @@ const Controls = ({
           />
         )}
       </div>
-    )
+    );
   }
-}
+};
 
 export default Controls;

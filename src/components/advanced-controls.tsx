@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { Styles, Config } from '../shared/types'
+import type { Styles, Config } from '../shared/types'
 import { getHandleValue } from '../utils/utils'
 import { usePicker } from '../context'
 import {

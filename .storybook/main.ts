@@ -16,8 +16,10 @@ const config: StorybookConfig = {
       ...(cfg.resolve || {}),
       dedupe: [...((cfg.resolve || {}).dedupe || []), "react", "react-dom"],
     };
-    // Note: When using GitHub Actions deploy, base path is set automatically by actions/configure-pages
-    // No need to manually set cfg.base here
+    // If environment provides a base (e.g., for GitHub Pages project path), honor it
+    if (process.env.STORYBOOK_BASE_HREF) {
+      cfg.base = process.env.STORYBOOK_BASE_HREF;
+    }
     return cfg;
   },
 };

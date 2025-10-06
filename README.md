@@ -1,5 +1,10 @@
 # @flowscape-ui/design-system-kit
 
+[![npm version](https://img.shields.io/npm/v/@flowscape-ui/design-system-kit.svg)](https://www.npmjs.com/package/@flowscape-ui/design-system-kit)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@flowscape-ui/design-system-kit)](https://bundlephobia.com/package/@flowscape-ui/design-system-kit)
+[![license](https://img.shields.io/npm/l/@flowscape-ui/design-system-kit.svg)](https://github.com/flowscape-ui/design-system-kit/blob/main/LICENSE)
+[![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=000)](https://buymeacoffee.com/flowscape)
+
 A comprehensive React design system kit with color picker, input range, and other essential UI components. Built with TypeScript and optimized for modern web applications.
 
 ## Features
@@ -325,14 +330,25 @@ npm test
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Links
+
+- **📦 npm Package**: https://www.npmjs.com/package/@flowscape-ui/design-system-kit
+- **📚 Documentation**: [GitHub Repository](https://github.com/flowscape-ui/design-system-kit)
+- **🎨 Storybook**: https://flowscape-ui.github.io/design-system-kit
+- **🐛 Report Issues**: https://github.com/flowscape-ui/design-system-kit/issues
+- **☕ Support the Project**: [Buy Me a Coffee](https://buymeacoffee.com/flowscape)
+
 ## Changelog
 
+See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes.
+
 ### v1.0.0
-- Initial release
+- Initial release as `@flowscape-ui/design-system-kit`
 - Full color picker functionality
-- Gradient support
-- Multiple color format support
-- Dark/light mode
+- Gradient support (linear and radial)
+- Multiple color format support (RGB, HSL, HSV, CMYK, HEX)
+- Dark/light mode with automatic detection
 - Eye dropper functionality
-- Advanced controls
-- TypeScript support
+- Advanced controls and sliders
+- Full TypeScript support with type definitions
+- Optimized bundle size (43KB minified)

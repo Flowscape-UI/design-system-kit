@@ -1,6 +1,6 @@
-# @flowscape-ui/color-picker
+# @flowscape-ui/design-system-kit
 
-A powerful, customizable React color picker component designed for whiteboard systems and modern web applications. Built with TypeScript and optimized for performance.
+A comprehensive React design system kit with color picker, input range, and other essential UI components. Built with TypeScript and optimized for modern web applications.
 
 ## Features
 
@@ -17,14 +17,14 @@ A powerful, customizable React color picker component designed for whiteboard sy
 ## Installation
 
 ```bash
-npm install @flowscape-ui/color-picker
+npm install @flowscape-ui/design-system-kit
 ```
 
 ## Quick Start
 
 ```tsx
 import React, { useState } from 'react'
-import { ColorPicker } from '@flowscape-ui/color-picker'
+import { ColorPicker } from '@flowscape-ui/design-system-kit'
 
 function App() {
   const [color, setColor] = useState('rgba(175, 51, 242, 1)')
@@ -43,7 +43,7 @@ function App() {
 ### Simple Color Picker
 
 ```tsx
-import { ColorPicker } from '@flowscape-ui/color-picker'
+import { ColorPicker } from '@flowscape-ui/design-system-kit'
 
 <ColorPicker
   value="#ff0000"
@@ -173,7 +173,7 @@ const config = {
 For more control, you can use the `useColorPicker` hook directly:
 
 ```tsx
-import { useColorPicker } from '@flowscape-ui/color-picker'
+import { useColorPicker } from '@flowscape-ui/design-system-kit'
 
 function CustomColorPicker() {
   const [color, setColor] = useState('rgba(175, 51, 242, 1)')

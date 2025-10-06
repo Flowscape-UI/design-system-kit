@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-10-06
+
+### Changed
+- **Project Renamed**: `@flowscape-ui/color-picker` → `@flowscape-ui/design-system-kit`
+- Updated package name to reflect expanded scope as a comprehensive design system
+- Enhanced keywords for better discoverability (design-system, design-system-kit, ui-components, component-library, input-range, ui-kit)
+- Updated all documentation and references to new package name
+- Prepared for future expansion with additional UI components beyond color picker
+
+### Note
+This is the initial release under the new name. The library now serves as a foundation for a complete design system kit, with plans to include input range components and other essential UI elements.
+
 ## [1.1.0] - 2024-12-19
 
 ### Added

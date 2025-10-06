@@ -33,8 +33,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Storybook
-        run: npm run build-storybook
+      - name: Build Storybook with base path
+        run: npm run build-storybook:gh-pages
+        env:
+          STORYBOOK_BASE_HREF: /design-system-kit/
 
       - name: Add .nojekyll to prevent Jekyll processing
         run: touch storybook-static/.nojekyll

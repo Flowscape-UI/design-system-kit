@@ -229,7 +229,7 @@ export const useColorPicker = (
     if (colors?.length > 2) {
       const pointToDelete = index ?? selectedColor;
       const remaining = colors?.filter(
-        (rc: ColorsProps, i: number) => i !== pointToDelete
+        (_rc: ColorsProps, i: number) => i !== pointToDelete
       );
       createGradientStr(remaining);
       if (!index) {

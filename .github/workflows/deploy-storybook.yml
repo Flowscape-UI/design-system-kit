@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -61,6 +61,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: storybook-static
+          name: github-pages
+          retention-days: 1
 
       - name: Deploy to GitHub Pages
         id: deployment

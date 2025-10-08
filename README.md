@@ -63,8 +63,6 @@ function App() {
 }
 ```
 
-[📖 Full ColorPicker Documentation](./src/color-picker/README.md)
-
 ### InputNumberSelect (3 KB)
 
 ```tsx
@@ -87,8 +85,6 @@ function App() {
 }
 ```
 
-[📖 Full InputNumberSelect Documentation](./src/input-number-select/README.md)
-
 ### InputColorPicker (62 KB)
 
 ```tsx
@@ -107,8 +103,6 @@ function App() {
 	)
 }
 ```
-
-[📖 Full InputColorPicker Documentation](./src/input-color-picker/README.md)
 
 ### Specialized Input Components
 

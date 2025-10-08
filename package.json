@@ -37,6 +37,76 @@
 			"types": "./dist/shared/index.d.ts",
 			"import": "./dist/shared/index.js",
 			"require": "./dist/shared/index.cjs"
+		},
+		"./inputs": {
+			"types": "./dist/inputs/index.d.ts",
+			"import": "./dist/inputs/index.js",
+			"require": "./dist/inputs/index.cjs"
+		},
+		"./inputs/opacity-input": {
+			"types": "./dist/inputs/opacity-input/index.d.ts",
+			"import": "./dist/inputs/opacity-input/index.js",
+			"require": "./dist/inputs/opacity-input/index.cjs"
+		},
+		"./inputs/angle-input": {
+			"types": "./dist/inputs/angle-input/index.d.ts",
+			"import": "./dist/inputs/angle-input/index.js",
+			"require": "./dist/inputs/angle-input/index.cjs"
+		},
+		"./inputs/border-radius-input": {
+			"types": "./dist/inputs/border-radius-input/index.d.ts",
+			"import": "./dist/inputs/border-radius-input/index.js",
+			"require": "./dist/inputs/border-radius-input/index.cjs"
+		},
+		"./inputs/border-radius-multi-input": {
+			"types": "./dist/inputs/border-radius-multi-input/index.d.ts",
+			"import": "./dist/inputs/border-radius-multi-input/index.js",
+			"require": "./dist/inputs/border-radius-multi-input/index.cjs"
+		},
+		"./inputs/width-input": {
+			"types": "./dist/inputs/width-input/index.d.ts",
+			"import": "./dist/inputs/width-input/index.js",
+			"require": "./dist/inputs/width-input/index.cjs"
+		},
+		"./inputs/height-input": {
+			"types": "./dist/inputs/height-input/index.d.ts",
+			"import": "./dist/inputs/height-input/index.js",
+			"require": "./dist/inputs/height-input/index.cjs"
+		},
+		"./inputs/spacing-input": {
+			"types": "./dist/inputs/spacing-input/index.d.ts",
+			"import": "./dist/inputs/spacing-input/index.js",
+			"require": "./dist/inputs/spacing-input/index.cjs"
+		},
+		"./inputs/font-size-input": {
+			"types": "./dist/inputs/font-size-input/index.d.ts",
+			"import": "./dist/inputs/font-size-input/index.js",
+			"require": "./dist/inputs/font-size-input/index.cjs"
+		},
+		"./inputs/line-height-input": {
+			"types": "./dist/inputs/line-height-input/index.d.ts",
+			"import": "./dist/inputs/line-height-input/index.js",
+			"require": "./dist/inputs/line-height-input/index.cjs"
+		},
+		"./inputs/letter-spacing-input": {
+			"types": "./dist/inputs/letter-spacing-input/index.d.ts",
+			"import": "./dist/inputs/letter-spacing-input/index.js",
+			"require": "./dist/inputs/letter-spacing-input/index.cjs"
+		},
+		"./inputs/z-index-input": {
+			"types": "./dist/inputs/z-index-input/index.d.ts",
+			"import": "./dist/inputs/z-index-input/index.js",
+			"require": "./dist/inputs/z-index-input/index.cjs"
+		},
+		"./inputs/scale-input": {
+			"types": "./dist/inputs/scale-input/index.d.ts",
+			"import": "./dist/inputs/scale-input/index.js",
+			"require": "./dist/inputs/scale-input/index.cjs"
+		},
+		"./inputs/blur-input": {
+			"types": "./dist/inputs/blur-input/index.d.ts",
+			"import": "./dist/inputs/blur-input/index.js",
+			"require": "./dist/inputs/blur-input/index.cjs"
 		}
 	},
 	"files": [

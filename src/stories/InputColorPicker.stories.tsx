@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import React, { useState } from 'react'
 import { InputColorPicker } from '../input-color-picker'
 
 const meta: Meta<typeof InputColorPicker> = {

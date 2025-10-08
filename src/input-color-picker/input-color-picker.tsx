@@ -77,6 +77,9 @@ export interface InputColorPickerProps {
 	title?: string
 	value?: string
 	className?: string
+	showOpacity?: boolean
+	showGradient?: boolean
+	pickerSize?: number
 	onChange?: (color: string) => void
 	onShowPicker?: (hidden: boolean) => void
 	onHideBackground?: (hidden: boolean) => void
@@ -93,6 +96,9 @@ export const InputColorPicker = ({
 	onHideBackground,
 	onOpacityChange,
 	onDeleteBackground,
+	showOpacity = true,
+	showGradient = false,
+	pickerSize = 250,
 }: InputColorPickerProps) => {
 	const { hex, opacity } = parseColor(value)
 	const [isPickerOpen, setIsPickerOpen] = useState(false)
@@ -392,6 +398,10 @@ export const InputColorPicker = ({
 						<ColorPicker
 							className="mx-auto"
 							value={color}
+							width={pickerSize}
+							height={pickerSize}
+							hideOpacity={!showOpacity}
+							hideGradientControls={!showGradient}
 							onChange={newColor => {
 								onChange?.(newColor)
 								setColor(newColor)

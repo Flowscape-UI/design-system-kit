@@ -10,6 +10,7 @@ export type Progression =
 	| 'geometric'
 	| 'paraboloid'
 	| 'exponential'
+	| 'logarithmic'
 
 export interface InputNumberSelectProps
 	extends Omit<React.ComponentProps<'input'>, 'defaultValue' | 'onChange'> {
@@ -95,6 +96,11 @@ export const InputNumberSelect = React.forwardRef<
 					return value + delta * Math.abs(delta) * 0.1
 				case 'exponential':
 					return value * (1 + delta * 0.01)
+				case 'logarithmic': {
+					// Logarithmic progression: change is proportional to log of current value
+					const logFactor = Math.log10(Math.max(Math.abs(value), 1) + 1)
+					return value + delta * logFactor
+				}
 				case 'geometric': {
 					const factor = 1.05
 					if (delta > 0) {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { addons } from 'storybook/manager-api'
 import { themes } from 'storybook/theming'
 import { ColorPicker } from '../color-picker'
@@ -81,8 +81,7 @@ export const Basic: Story = {
 						border: '1px solid #2a2f3a',
 						boxShadow:
 							'0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 32px rgba(0,0,0,0.35)',
-						background:
-							'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0))',
+						background: '#202020',
 						padding: 20,
 						color: '#e5e7eb',
 					}}

@@ -1,1 +1,4 @@
-@import "tailwindcss";
+/* Tailwind CSS v4 entry for Storybook */
+@import 'tailwindcss';
+
+/* You can add design tokens or custom CSS below if needed */

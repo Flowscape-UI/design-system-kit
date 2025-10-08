@@ -1,13 +1,9 @@
-import { ColorPicker } from './components/index'
-export { useColorPicker } from './hooks/useColorPicker'
+// Re-export all modules for convenience
+export * from './color-picker'
+export * from './input'
+export * from './input-color-picker'
+export * from './input-number-select'
+export * from './shared'
 
-export type {
-  Styles,
-  ColorsProps,
-  PassedConfig,
-  LocalesProps,
-  GradientProps,
-  ColorPickerProps,
-} from './shared/types'
-
-export default ColorPicker
+// Default export for backward compatibility
+export { ColorPicker as default } from './color-picker'

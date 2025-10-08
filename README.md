@@ -5,20 +5,21 @@
 [![license](https://img.shields.io/npm/l/@flowscape-ui/design-system-kit.svg)](https://github.com/flowscape-ui/design-system-kit/blob/main/LICENSE)
 [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=000)](https://buymeacoffee.com/flowscape)
 
-A comprehensive React design system kit with color picker, input components, and other essential UI elements. Built with TypeScript, modular architecture, and optimized for modern web applications.
+A comprehensive React design system kit with color picker, specialized input components, and other essential UI elements. Built with TypeScript, modular architecture, and optimized for modern web applications.
 
 ## ✨ Features
 
 - 🎨 **Multiple Color Formats**: Support for RGB, HSL, HSV, CMYK, and HEX
 - 🌈 **Gradient Support**: Create and edit linear and radial gradients
 - 🎯 **Eye Dropper**: Pick colors directly from the screen
-- 🔢 **Advanced Inputs**: Drag-to-change numeric inputs with multiple progressions
+- 🔢 **13 Specialized Input Components**: Drag-to-change numeric inputs for design properties
+- 🎛️ **Multiple Progression Types**: Linear, arithmetic, geometric, paraboloid, exponential
 - 🌓 **Dark/Light Mode**: Automatic theme detection with manual override
 - 📦 **Modular Architecture**: Import only what you need for optimal bundle size
 - ⚡ **Tree-shakeable**: Reduce bundle size by up to 94%
-- 🎛️ **Highly Customizable**: Hide/show components and customize styling
+- 🎨 **Highly Customizable**: Hide/show components and customize styling
 - 🔧 **TypeScript Support**: Full type definitions included
-- 🎪 **Advanced Controls**: Fine-tune colors with precision sliders
+- 🎪 **Advanced Controls**: Fine-tune colors and values with precision sliders
 
 ## 📦 Installation
 
@@ -80,7 +81,7 @@ function App() {
 			min={0}
 			max={100}
 			step={1}
-			icon='%'
+			icon="%"
 		/>
 	)
 }
@@ -99,7 +100,7 @@ function App() {
 
 	return (
 		<InputColorPicker
-			title='Background Color'
+			title="Background Color"
 			value={color}
 			onChange={setColor}
 		/>
@@ -109,21 +110,156 @@ function App() {
 
 [📖 Full InputColorPicker Documentation](./src/input-color-picker/README.md)
 
+### Specialized Input Components
+
+A collection of 13 specialized input components for design properties:
+
+```tsx
+import {
+	OpacityInput,
+	AngleInput,
+	BorderRadiusInput,
+	BorderRadiusMultiInput,
+	WidthInput,
+	HeightInput,
+	SpacingInput,
+	FontSizeInput,
+	LineHeightInput,
+	LetterSpacingInput,
+	ZIndexInput,
+	ScaleInput,
+	BlurInput,
+} from '@flowscape-ui/design-system-kit/inputs'
+
+// Or import individual components
+import { OpacityInput } from '@flowscape-ui/design-system-kit/inputs/opacity-input'
+```
+
+#### Usage Examples:
+
+**OpacityInput** - Control opacity (0-100%)
+
+```tsx
+<OpacityInput value={75} onChange={setOpacity} theme="dark" />
+```
+
+**AngleInput** - Control rotation angle (0-360°)
+
+```tsx
+<AngleInput value={45} onChange={setAngle} />
+```
+
+**BorderRadiusInput** - Border radius control
+
+```tsx
+<BorderRadiusInput value={8} onChange={setRadius} unit="px" />
+```
+
+**BorderRadiusMultiInput** - Control all 4 corners
+
+```tsx
+<BorderRadiusMultiInput value={[8, 16, 8, 16]} onChange={setCorners} />
+```
+
+**WidthInput / HeightInput** - Element dimensions
+
+```tsx
+<WidthInput value={200} onChange={setWidth} unit="px" />
+<HeightInput value={150} onChange={setHeight} unit="%" />
+```
+
+**SpacingInput** - Spacing and gaps
+
+```tsx
+<SpacingInput value={16} onChange={setSpacing} unit="rem" />
+```
+
+**FontSizeInput** - Font size control
+
+```tsx
+<FontSizeInput value={16} onChange={setFontSize} unit="px" />
+```
+
+**LineHeightInput** - Line height control
+
+```tsx
+<LineHeightInput value={1.5} onChange={setLineHeight} />
+```
+
+**LetterSpacingInput** - Letter spacing control
+
+```tsx
+<LetterSpacingInput value={0.5} onChange={setLetterSpacing} unit="em" />
+```
+
+**ZIndexInput** - Z-index layering
+
+```tsx
+<ZIndexInput value={10} onChange={setZIndex} />
+```
+
+**ScaleInput** - Element scaling
+
+```tsx
+<ScaleInput value={1.2} onChange={setScale} />
+```
+
+**BlurInput** - Blur effect
+
+```tsx
+<BlurInput value={5} onChange={setBlur} unit="px" />
+```
+
+#### Common Input Props:
+
+```tsx
+interface BaseInputProps {
+	value: number
+	onChange?: (value: number) => void
+	min?: number
+	max?: number
+	step?: number
+	precision?: number
+	progression?:
+		| 'linear'
+		| 'arithmetic'
+		| 'geometric'
+		| 'paraboloid'
+		| 'exponential'
+	orientation?: 'horizontal' | 'vertical'
+	unit?: 'px' | '%' | 'rem' | 'em' | 'deg' | 'pt' | 'none'
+	showUnit?: boolean
+	icon?: React.ReactNode | string
+	className?: string
+	classNameInput?: string
+	classNameIcon?: string
+	theme?: 'light' | 'dark' | 'auto'
+	disabled?: boolean
+}
+```
+
+#### Progression Types:
+
+- **linear** - Linear change (default)
+- **arithmetic** - Arithmetic progression (×2)
+- **geometric** - Geometric progression (×1.05)
+- **paraboloid** - Parabolic acceleration
+- **exponential** - Exponential change
+
 ## Basic Usage
 
 ### Simple Color Picker
 
 ```tsx
 import { ColorPicker } from '@flowscape-ui/design-system-kit'
-
-;<ColorPicker value='#ff0000' onChange={color => console.log(color)} />
+;<ColorPicker value="#ff0000" onChange={color => console.log(color)} />
 ```
 
 ### With Custom Dimensions
 
 ```tsx
 <ColorPicker
-	value='rgba(255, 0, 0, 0.5)'
+	value="rgba(255, 0, 0, 0.5)"
 	onChange={setColor}
 	width={350}
 	height={350}
@@ -134,7 +270,7 @@ import { ColorPicker } from '@flowscape-ui/design-system-kit'
 
 ```tsx
 <ColorPicker
-	value='linear-gradient(90deg, #ff0000 0%, #0000ff 100%)'
+	value="linear-gradient(90deg, #ff0000 0%, #0000ff 100%)"
 	onChange={setGradient}
 />
 ```
@@ -269,9 +405,9 @@ function CustomColorPicker() {
 	return (
 		<div>
 			<input
-				type='range'
-				min='0'
-				max='255'
+				type="range"
+				min="0"
+				max="255"
 				onChange={e => setR(Number(e.target.value))}
 			/>
 			<p>Current color: {valueToHex()}</p>
@@ -415,6 +551,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes.
+
+### v1.1.0 (Latest)
+
+**🎉 Major Update: Specialized Input Components**
+
+- ✨ **13 new specialized input components** for design properties
+- 🎛️ **5 progression types**: linear, arithmetic, geometric, paraboloid, exponential
+- 🔄 **Drag-to-change** functionality for all numeric inputs
+- 🎨 **Theme support**: light, dark, auto
+- 📐 **Vertical and horizontal** orientation
+- 🔧 **Modular architecture** for InputColorPicker (hooks, utils, types)
+- 🐛 **Bug fixes**: NaN% in gradients, opacity validation
+- 📚 **Enhanced documentation** and Storybook examples
+
+**New Components:**
+
+- OpacityInput, AngleInput, BorderRadiusInput, BorderRadiusMultiInput
+- WidthInput, HeightInput, SpacingInput, FontSizeInput
+- LineHeightInput, LetterSpacingInput, ZIndexInput, ScaleInput, BlurInput
 
 ### v1.0.0
 

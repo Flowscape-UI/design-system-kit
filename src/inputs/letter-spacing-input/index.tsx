@@ -30,17 +30,19 @@ export const LetterSpacingInput = React.memo(
 			},
 			ref
 		) => {
-			const { handleMouseDown, handleInputChange, handleBlur } = useNumberInput({
-				value,
-				onChange,
-				min,
-				max,
-				step,
-				precision,
-				progression,
-				orientation,
-				disabled,
-			})
+			const { handleMouseDown, handleInputChange, handleBlur } = useNumberInput(
+				{
+					value,
+					onChange,
+					min,
+					max,
+					step,
+					precision,
+					progression,
+					orientation,
+					disabled,
+				}
+			)
 
 			const isDark = useMemo(() => {
 				if (theme === 'dark') return true
@@ -56,7 +58,12 @@ export const LetterSpacingInput = React.memo(
 			const renderIcon = useMemo(() => {
 				if (icon) {
 					return typeof icon === 'string' ? (
-						<span className={cn('text-sm font-medium select-none', themeClasses.icon)}>
+						<span
+							className={cn(
+								'text-sm font-medium select-none',
+								themeClasses.icon
+							)}
+						>
 							{icon}
 						</span>
 					) : (

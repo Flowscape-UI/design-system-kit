@@ -7,15 +7,41 @@ export * from './shared'
 
 // Re-export inputs with types
 export {
-	AngleInput, BlurInput, BorderRadiusInput,
-	BorderRadiusMultiInput, FontSizeInput, HeightInput, LetterSpacingInput, LineHeightInput, OpacityInput, ScaleInput, SpacingInput, WidthInput, ZIndexInput
+	AngleInput,
+	BlurInput,
+	BorderRadiusInput,
+	BorderRadiusMultiInput,
+	FontSizeInput,
+	HeightInput,
+	LetterSpacingInput,
+	LineHeightInput,
+	OpacityInput,
+	ScaleInput,
+	SpacingInput,
+	WidthInput,
+	ZIndexInput,
 } from './inputs'
 
 export type {
-	AngleInputProps, BaseInputProps,
-	BaseInputPropsWithoutUnit, BlurInputProps, BorderRadiusInputProps,
-	BorderRadiusMultiInputProps, CommonInputProps, FontSizeInputProps, HeightInputProps, LetterSpacingInputProps, LineHeightInputProps, OpacityInputProps, Orientation,
-	Progression, ScaleInputProps, SpacingInputProps, Unit, WidthInputProps, ZIndexInputProps
+	AngleInputProps,
+	BaseInputProps,
+	BaseInputPropsWithoutUnit,
+	BlurInputProps,
+	BorderRadiusInputProps,
+	BorderRadiusMultiInputProps,
+	CommonInputProps,
+	FontSizeInputProps,
+	HeightInputProps,
+	LetterSpacingInputProps,
+	LineHeightInputProps,
+	OpacityInputProps,
+	Orientation,
+	Progression,
+	ScaleInputProps,
+	SpacingInputProps,
+	Unit,
+	WidthInputProps,
+	ZIndexInputProps,
 } from './inputs'
 
 // Default export for backward compatibility

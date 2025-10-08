@@ -89,7 +89,8 @@ export const useNumberInput = ({
 	const handleBlur = useCallback(
 		(e: React.FocusEvent<HTMLInputElement>) => {
 			const rawValue = e.target.value
-			let numericValue = rawValue === '' ? (min !== undefined ? +min : 0) : +rawValue
+			let numericValue =
+				rawValue === '' ? (min !== undefined ? +min : 0) : +rawValue
 
 			if (isNaN(numericValue)) {
 				onChangeRef.current?.(min !== undefined ? +min : 0)

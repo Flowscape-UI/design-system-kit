@@ -5,6 +5,97 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-10-08
+
+### Added
+
+**🎉 13 New Specialized Input Components**
+- `OpacityInput` - Opacity control (0-100%)
+- `AngleInput` - Rotation angle control (0-360°)
+- `BorderRadiusInput` - Border radius control with unit support
+- `BorderRadiusMultiInput` - Control all 4 corners independently
+- `WidthInput` - Width control with multiple units
+- `HeightInput` - Height control with multiple units
+- `SpacingInput` - Spacing and gap control
+- `FontSizeInput` - Font size control
+- `LineHeightInput` - Line height control (unitless)
+- `LetterSpacingInput` - Letter spacing control
+- `ZIndexInput` - Z-index layering control
+- `ScaleInput` - Element scaling control
+- `BlurInput` - Blur effect control
+
+**Advanced Input Features**
+- 🎛️ **5 Progression Types**: linear, arithmetic, geometric, paraboloid, exponential
+- 🔄 **Drag-to-change** functionality for all numeric inputs
+- 📐 **Dual orientation**: horizontal and vertical layouts
+- 🎨 **Theme support**: light, dark, and auto modes
+- 🔢 **Precision control**: configurable decimal places
+- 📏 **Unit system**: px, %, rem, em, deg, pt, none
+- 🎯 **Custom icons**: string or React component support
+- 🎨 **Full customization**: className props for all elements
+
+**Modular Architecture**
+- Refactored `InputColorPicker` into modular structure:
+  - `hooks/` - useColorPickerState, useDraggable
+  - `utils/` - color conversion utilities
+  - `types.ts` - TypeScript definitions
+- Shared input utilities and hooks
+- Consistent component patterns across all inputs
+
+**Documentation**
+- Added `INPUTS_GUIDE.md` with comprehensive input documentation
+- Updated README.md with new components section
+- Added Storybook examples for all input components
+- Created `README.md` for InputColorPicker module
+
+### Changed
+
+- **InputColorPicker Architecture**
+  - Decomposed into hooks, utils, and types
+  - Improved code maintainability and reusability
+  - Better TypeScript support with exported types
+
+- **Input Components Structure**
+  - Unified `src/inputs/` directory for all input components
+  - Shared utilities in `src/inputs/shared/`
+  - Consistent prop interfaces across components
+
+- **Theme System**
+  - Unified theme classes for light/dark modes
+  - Auto theme detection based on system preferences
+  - Consistent styling across all components
+
+### Fixed
+
+- 🐛 Fixed NaN% error in gradient color strings
+- 🐛 Fixed opacity validation in gradients
+- 🐛 Fixed LineHeightInput using wrong type (now uses BaseInputPropsWithoutUnit)
+- 🐛 Improved color parsing for edge cases
+- 🐛 Fixed import order consistency across components
+
+### Technical Improvements
+
+- **TypeScript**
+  - Exported all shared types (Unit, Orientation, Progression, etc.)
+  - Better type safety with strict null checks
+  - Improved prop type definitions
+
+- **Code Quality**
+  - Unified import order across all components
+  - Consistent code formatting
+  - Better error handling and validation
+
+- **Bundle Size**
+  - Tree-shakeable exports for all input components
+  - Modular imports for optimal bundle size
+  - Individual component exports in package.json
+
+### Dependencies
+
+- No new dependencies added
+- Leveraged existing `lucide-react` for icons
+- Utilized `tailwind-merge` for className handling
+
 ## [1.0.0] - 2025-10-06
 
 ### Changed

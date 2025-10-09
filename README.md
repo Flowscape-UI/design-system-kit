@@ -12,7 +12,7 @@ A comprehensive React design system kit with color picker, specialized input com
 - 🎨 **Multiple Color Formats**: Support for RGB, HSL, HSV, CMYK, and HEX
 - 🌈 **Gradient Support**: Create and edit linear and radial gradients
 - 🎯 **Eye Dropper**: Pick colors directly from the screen
-- 🔢 **13 Specialized Input Components**: Drag-to-change numeric inputs for design properties
+- 🔢 **Universal Input Component**: Drag-to-change numeric input for all design properties
 - 🎛️ **Multiple Progression Types**: Linear, arithmetic, geometric, paraboloid, exponential
 - 🌓 **Dark/Light Mode**: Automatic theme detection with manual override
 - 📦 **Modular Architecture**: Import only what you need for optimal bundle size
@@ -63,31 +63,56 @@ function App() {
 }
 ```
 
-[📖 Full ColorPicker Documentation](./src/color-picker/README.md)
-
 ### InputNumberSelect (3 KB)
+
+Universal drag-to-change numeric input component for all design properties. Supports custom icons, units, precision, and multiple progression types.
 
 ```tsx
 import { useState } from 'react'
 import { InputNumberSelect } from '@flowscape-ui/design-system-kit/input-number-select'
+import { RotateCw } from 'lucide-react'
 
 function App() {
-	const [value, setValue] = useState(50)
+	const [opacity, setOpacity] = useState(75)
+	const [angle, setAngle] = useState(45)
 
 	return (
-		<InputNumberSelect
-			value={value}
-			onChange={setValue}
-			min={0}
-			max={100}
-			step={1}
-			icon="%"
-		/>
+		<>
+			{/* Opacity control */}
+			<InputNumberSelect
+				value={opacity}
+				onChange={setOpacity}
+				min={0}
+				max={100}
+				step={1}
+				icon="%"
+			/>
+
+			{/* Angle control with custom icon */}
+			<InputNumberSelect
+				value={angle}
+				onChange={setAngle}
+				min={0}
+				max={360}
+				step={1}
+				unit="deg"
+				showUnit={true}
+				icon={<RotateCw size={16} />}
+			/>
+		</>
 	)
 }
 ```
 
-[📖 Full InputNumberSelect Documentation](./src/input-number-select/README.md)
+**Key Features:**
+
+- 🎯 Drag-to-change with mouse/keyboard support
+- 🎨 Custom icons (string or React components)
+- 📊 5 progression types (linear, arithmetic, geometric, paraboloid, exponential)
+- 🌓 Automatic dark/light theme support via Tailwind CSS
+- 📝 Unit display (px, %, rem, em, deg, etc.)
+- 🔄 Horizontal/vertical orientation
+- ⌨️ Keyboard navigation (Arrow keys, Page Up/Down, Home/End)
 
 ### InputColorPicker (62 KB)
 
@@ -108,137 +133,124 @@ function App() {
 }
 ```
 
-[📖 Full InputColorPicker Documentation](./src/input-color-picker/README.md)
+### InputNumberSelect - Usage Examples
 
-### Specialized Input Components
-
-A collection of 13 specialized input components for design properties:
+One universal component for all design properties. Configure it through props:
 
 ```tsx
-import {
-	OpacityInput,
-	AngleInput,
-	BorderRadiusInput,
-	BorderRadiusMultiInput,
-	WidthInput,
-	HeightInput,
-	SpacingInput,
-	FontSizeInput,
-	LineHeightInput,
-	LetterSpacingInput,
-	ZIndexInput,
-	ScaleInput,
-	BlurInput,
-} from '@flowscape-ui/design-system-kit/inputs'
+import { InputNumberSelect } from '@flowscape-ui/design-system-kit/input-number-select'
+import { RotateCw, SquareRoundCorner, Type, Blend } from 'lucide-react'
 
-// Or import individual components
-import { OpacityInput } from '@flowscape-ui/design-system-kit/inputs/opacity-input'
+// Opacity (0-100%)
+<InputNumberSelect
+	value={75}
+	onChange={setOpacity}
+	min={0}
+	max={100}
+	step={1}
+	icon={<Blend size={16} />}
+/>
+
+// Angle (0-360°)
+<InputNumberSelect
+	value={45}
+	onChange={setAngle}
+	min={0}
+	max={360}
+	step={1}
+	unit="deg"
+	showUnit={true}
+	icon={<RotateCw size={16} />}
+/>
+
+// Border Radius with units
+<InputNumberSelect
+	value={8}
+	onChange={setRadius}
+	min={0}
+	max={100}
+	step={1}
+	unit="px"
+	showUnit={true}
+	icon={<SquareRoundCorner size={16} />}
+/>
+
+// Font Size
+<InputNumberSelect
+	value={16}
+	onChange={setFontSize}
+	min={8}
+	max={72}
+	step={1}
+	unit="px"
+	showUnit={true}
+	icon={<Type size={16} />}
+/>
+
+// Line Height (unitless)
+<InputNumberSelect
+	value={1.5}
+	onChange={setLineHeight}
+	min={0.8}
+	max={3}
+	step={0.1}
+	precision={1}
+	unit="none"
+	showUnit={false}
+/>
+
+// Vertical orientation
+<InputNumberSelect
+	value={50}
+	onChange={setValue}
+	min={0}
+	max={100}
+	step={1}
+	orientation="vertical"
+	icon="%"
+/>
 ```
 
-#### Usage Examples:
-
-**OpacityInput** - Control opacity (0-100%)
+### InputNumberSelect Props
 
 ```tsx
-<OpacityInput value={75} onChange={setOpacity} theme="dark" />
-```
-
-**AngleInput** - Control rotation angle (0-360°)
-
-```tsx
-<AngleInput value={45} onChange={setAngle} />
-```
-
-**BorderRadiusInput** - Border radius control
-
-```tsx
-<BorderRadiusInput value={8} onChange={setRadius} unit="px" />
-```
-
-**BorderRadiusMultiInput** - Control all 4 corners
-
-```tsx
-<BorderRadiusMultiInput value={[8, 16, 8, 16]} onChange={setCorners} />
-```
-
-**WidthInput / HeightInput** - Element dimensions
-
-```tsx
-<WidthInput value={200} onChange={setWidth} unit="px" />
-<HeightInput value={150} onChange={setHeight} unit="%" />
-```
-
-**SpacingInput** - Spacing and gaps
-
-```tsx
-<SpacingInput value={16} onChange={setSpacing} unit="rem" />
-```
-
-**FontSizeInput** - Font size control
-
-```tsx
-<FontSizeInput value={16} onChange={setFontSize} unit="px" />
-```
-
-**LineHeightInput** - Line height control
-
-```tsx
-<LineHeightInput value={1.5} onChange={setLineHeight} />
-```
-
-**LetterSpacingInput** - Letter spacing control
-
-```tsx
-<LetterSpacingInput value={0.5} onChange={setLetterSpacing} unit="em" />
-```
-
-**ZIndexInput** - Z-index layering
-
-```tsx
-<ZIndexInput value={10} onChange={setZIndex} />
-```
-
-**ScaleInput** - Element scaling
-
-```tsx
-<ScaleInput value={1.2} onChange={setScale} />
-```
-
-**BlurInput** - Blur effect
-
-```tsx
-<BlurInput value={5} onChange={setBlur} unit="px" />
-```
-
-#### Common Input Props:
-
-```tsx
-interface BaseInputProps {
+interface InputNumberSelectProps {
+	// Value control
 	value: number
 	onChange?: (value: number) => void
-	min?: number
-	max?: number
-	step?: number
-	precision?: number
-	progression?:
-		| 'linear'
-		| 'arithmetic'
-		| 'geometric'
-		| 'paraboloid'
-		| 'exponential'
-	orientation?: 'horizontal' | 'vertical'
-	unit?: 'px' | '%' | 'rem' | 'em' | 'deg' | 'pt' | 'none'
-	showUnit?: boolean
-	icon?: React.ReactNode | string
-	className?: string
-	classNameInput?: string
-	classNameIcon?: string
-	theme?: 'light' | 'dark' | 'auto'
-	disabled?: boolean
+
+	// Range configuration
+	min?: number // Default: 0
+	max?: number // Default: 100
+	step?: number // Default: 1
+	precision?: number // Decimal places, default: 0
+
+	// Progression type for dragging
+	progression?: 'linear' | 'arithmetic' | 'geometric' | 'paraboloid' | 'exponential'
+
+	// Visual configuration
+	orientation?: 'horizontal' | 'vertical' // Default: 'horizontal'
+	icon?: React.ReactNode | string // Custom icon or text
+
+	// Unit display
+	unit?: 'px' | '%' | 'rem' | 'em' | 'deg' | 'none'
+	showUnit?: boolean // Show unit after value
+
+	// Styling
+	className?: string // Container classes
+	classNameInput?: string // Input field classes
+	classNameIcon?: string // Icon container classes
+
+	// State
+	disabled?: boolean // Disable component
+	isDisabledMouseEvent?: boolean // Disable drag functionality
+
+	// HTML input props
+	...HTMLInputElement // All standard input props
 }
 ```
 
-#### Progression Types:
+### Progression Types
 
 - **linear** - Linear change (default)
 - **arithmetic** - Arithmetic progression (×2)
@@ -565,11 +577,14 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes.
 - 🐛 **Bug fixes**: NaN% in gradients, opacity validation
 - 📚 **Enhanced documentation** and Storybook examples
 
-**New Components:**
+**Key Features:**
 
-- OpacityInput, AngleInput, BorderRadiusInput, BorderRadiusMultiInput
-- WidthInput, HeightInput, SpacingInput, FontSizeInput
-- LineHeightInput, LetterSpacingInput, ZIndexInput, ScaleInput, BlurInput
+- Universal InputNumberSelect component for all design properties
+- Drag-to-change functionality with 5 progression types
+- Custom icons support (string or React components)
+- Automatic dark/light theme via Tailwind CSS
+- Horizontal and vertical orientation
+- Full keyboard navigation support
 
 ### v1.0.0
 

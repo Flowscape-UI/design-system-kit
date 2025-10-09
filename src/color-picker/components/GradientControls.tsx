@@ -1,10 +1,10 @@
 import { usePicker } from '../context'
-import { formatInputValues, low, high } from '../utils/formatters'
 import { controlBtnStyles } from '../styles/styles'
+import { formatInputValues, high, low } from '../utils/formatters'
 import TrashIcon, {
+	DegreesIcon,
 	LinearIcon,
 	RadialIcon,
-	DegreesIcon,
 	StopIcon,
 } from './icon'
 

@@ -13,6 +13,7 @@ A comprehensive React design system kit with color picker, specialized input com
 - 🌈 **Gradient Support**: Create and edit linear and radial gradients
 - 🎯 **Eye Dropper**: Pick colors directly from the screen
 - 🔢 **Universal Input Component**: Drag-to-change numeric input for all design properties
+- 🎨 **HEX Input Components**: Specialized inputs for color values with drag-to-change
 - 🎛️ **Multiple Progression Types**: Linear, arithmetic, geometric, paraboloid, exponential
 - 🌓 **Dark/Light Mode**: Automatic theme detection with manual override
 - 📦 **Modular Architecture**: Import only what you need for optimal bundle size
@@ -36,6 +37,8 @@ import {
 	ColorPicker,
 	InputNumberSelect,
 	InputColorPicker,
+	InputHex,
+	InputHexWithPreview,
 } from '@flowscape-ui/design-system-kit'
 ```
 
@@ -46,6 +49,8 @@ import {
 import { ColorPicker } from '@flowscape-ui/design-system-kit/color-picker'
 import { InputNumberSelect } from '@flowscape-ui/design-system-kit/input-number-select'
 import { InputColorPicker } from '@flowscape-ui/design-system-kit/input-color-picker'
+import { InputHex } from '@flowscape-ui/design-system-kit/input-hex'
+import { InputHexWithPreview } from '@flowscape-ui/design-system-kit/input-hex-with-preview'
 ```
 
 ## 📚 Components
@@ -131,6 +136,140 @@ function App() {
 		/>
 	)
 }
+```
+
+### InputHex (1 KB)
+
+Component for HEX color input with drag-to-change.
+
+```tsx
+import { useState } from 'react'
+import { InputHex } from '@flowscape-ui/design-system-kit/input-hex'
+
+function App() {
+	const [color, setColor] = useState('#ff5733')
+
+	return <InputHex hexColor={color} handleChange={setColor} />
+}
+```
+
+**Key Features:**
+
+- 🎨 Drag-to-change for color modification by dragging
+- 🔤 Real-time HEX value validation
+
+- 🎯 Customizable callbacks for click and drag events
+- 🌓 Automatic light/dark theme support
+
+### InputHexWithPreview (1.2 KB)
+
+Extended version of InputHex with visual color preview.
+
+```tsx
+import { useState } from 'react'
+import { InputHexWithPreview } from '@flowscape-ui/design-system-kit/input-hex-with-preview'
+
+function App() {
+	const [color, setColor] = useState('#3498db')
+	const [opacity, setOpacity] = useState(1)
+
+	return (
+		<InputHexWithPreview
+			hexColor={color}
+			opacity={opacity}
+			handleChange={setColor}
+		/>
+	)
+}
+```
+
+**Key Features:**
+
+- 🎨 Everything from InputHex + visual color preview
+- 👁️ Square preview with opacity support
+- 🎨 Preview style customization
+- 📦 Compact size for form integration
+
+### InputHex Props
+
+```tsx
+interface InputHexProps {
+	// Main parameters
+	hexColor: string // HEX color (required)
+	handleChange: (hexColor: string) => void // Change callback
+
+	// Styling
+	className?: string // Container classes
+	classNameInput?: string // Input field classes
+	classNameIcon?: string // Icon classes
+
+	// Behavior
+	disabled?: boolean // Disable component
+	isDisabledMouseEvent?: boolean // Disable drag functionality
+
+	// Callbacks
+	onIconClick?: (hexColor: string) => void // Icon click
+	onIconPointerDown?: (hexColor: string) => void // Drag start
+	onIconPointerUp?: (hexColor: string) => void // Drag end
+
+	// HTML input props
+	...HTMLInputElement // All standard input props
+}
+```
+
+### InputHexWithPreview Props
+
+Inherits all props from `InputHexProps` plus:
+
+```tsx
+interface InputHexWithPreviewProps extends InputHexProps {
+	opacity?: number // Opacity (0-1), default: 1
+	classNamePreview?: string // Classes for color preview
+}
+```
+
+### InputHex Usage Examples
+
+```tsx
+import { InputHex, InputHexWithPreview } from '@flowscape-ui/design-system-kit'
+
+// Basic usage
+<InputHex
+	hexColor="#ff5733"
+	handleChange={(color) => console.log(color)}
+/>
+
+// With preview
+<InputHexWithPreview
+	hexColor="#2ecc71"
+	opacity={0.8}
+	handleChange={setColor}
+/>
+
+// With custom callbacks
+<InputHex
+	hexColor={color}
+	handleChange={setColor}
+	onIconClick={(hex) => console.log('Clicked:', hex)}
+	onIconPointerDown={(hex) => console.log('Drag start:', hex)}
+	onIconPointerUp={(hex) => console.log('Drag end:', hex)}
+/>
+
+// Disabled drag
+<InputHex
+	hexColor={color}
+	handleChange={setColor}
+	isDisabledMouseEvent={true}
+/>
+
+// Custom styles
+<InputHexWithPreview
+	hexColor={color}
+	handleChange={setColor}
+	className="w-full"
+	classNameInput="font-mono"
+	classNamePreview="rounded-full"
+/>
 ```
 
 ### InputNumberSelect - Usage Examples

@@ -37,6 +37,16 @@
 			"types": "./dist/shared/index.d.ts",
 			"import": "./dist/shared/index.js",
 			"require": "./dist/shared/index.cjs"
+		},
+		"./input-hex": {
+			"types": "./dist/input-hex/index.d.ts",
+			"import": "./dist/input-hex/index.js",
+			"require": "./dist/input-hex/index.cjs"
+		},
+		"./input-hex-with-preview": {
+			"types": "./dist/input-hex-with-preview/index.d.ts",
+			"import": "./dist/input-hex-with-preview/index.js",
+			"require": "./dist/input-hex-with-preview/index.cjs"
 		}
 	},
 	"files": [

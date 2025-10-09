@@ -1,136 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
 import tc from 'tinycolor2'
+import { InputHex } from '../../input-hex/input-hex'
 import { InputNumberSelect } from '../../input-number-select'
 import { usePicker } from '../context'
-import { cmykToRgb, getHexAlpha, rgb2cmyk } from '../utils/converters'
+import { cmykToRgb, rgb2cmyk } from '../utils/converters'
 import { round } from '../utils/formatters'
-
-const HexInput = ({
-	opacity,
-	tinyColor,
-	showHexAlpha,
-	handleChange,
-}: {
-	tinyColor: any
-	opacity: number
-	showHexAlpha: boolean
-	handleChange: (arg0: string) => void
-}) => {
-	const [disable, setDisable] = useState('')
-	const hex = tinyColor.toHex()
-	const [newHex, setNewHex] = useState(hex)
-	const dragStartValue = useRef(0)
-	const dragStartX = useRef(0)
-
-	useEffect(() => {
-		if (disable !== 'hex') {
-			setNewHex(hex)
-		}
-	}, [tinyColor, disable, hex])
-
-	const hexFocus = () => {
-		setDisable('hex')
-	}
-
-	const hexBlur = () => {
-		setDisable('')
-	}
-
-	const handleHexInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = e.target.value
-		setNewHex(val)
-		if (tc(val).isValid()) {
-			const { r, g, b } = tc(val).toRgb()
-			const newColor = `rgba(${r}, ${g}, ${b}, ${opacity})`
-			handleChange(newColor)
-		}
-	}
-
-	const handleMouseDown = (e: React.MouseEvent) => {
-		e.preventDefault()
-		dragStartValue.current = parseInt(tinyColor.toHex(), 16)
-		dragStartX.current = e.clientX
-		setDisable('hex')
-		document.addEventListener('mousemove', handleMouseMove)
-		document.addEventListener('mouseup', handleMouseUp)
-	}
-
-	const handleMouseUp = () => {
-		setDisable('')
-		document.removeEventListener('mousemove', handleMouseMove)
-		document.removeEventListener('mouseup', handleMouseUp)
-	}
-
-	const handleMouseMove = (e: MouseEvent) => {
-		const movementX = e.clientX - dragStartX.current
-		const step = 55000
-		let newColorInt = Math.round(dragStartValue.current + movementX * step)
-		newColorInt = Math.max(0, Math.min(0xffffff, newColorInt))
-
-		const newColorHex = newColorInt.toString(16).padStart(6, '0')
-		setNewHex(newColorHex)
-
-		const { r, g, b } = tc(newColorHex).toRgb()
-		handleChange(`rgba(${r}, ${g}, ${b}, ${opacity})`)
-	}
-
-	const displayValue = showHexAlpha
-		? `${newHex}${getHexAlpha(opacity)}`
-		: newHex
-
-	const wrapperStyle: React.CSSProperties = {
-		display: 'inline-flex',
-		alignItems: 'center',
-		overflow: 'hidden',
-		borderRadius: '6px',
-		border: '1px solid #333',
-		backgroundColor: '#1a1a1a',
-		height: 28,
-		width: '108px',
-	}
-
-	const handleStyle: React.CSSProperties = {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: '100%',
-		width: 28,
-		cursor: 'ew-resize',
-		color: '#888',
-		fontWeight: 'bold',
-		fontFamily: 'monospace',
-		userSelect: 'none',
-		fontSize: '16px',
-	}
-
-	const inputStyle: React.CSSProperties = {
-		width: '100%',
-		textAlign: 'left',
-		paddingLeft: 8,
-		border: 'none',
-		borderRadius: 0,
-		height: '100%',
-		backgroundColor: 'transparent',
-		color: '#D4D4D4',
-		outline: 'none',
-		fontSize: '14px',
-	}
-
-	return (
-		<div style={wrapperStyle}>
-			<div onMouseDown={handleMouseDown} style={handleStyle}>
-				#
-			</div>
-			<input
-				onBlur={hexBlur}
-				onFocus={hexFocus}
-				onChange={handleHexInput}
-				value={displayValue?.toUpperCase()}
-				style={inputStyle}
-			/>
-		</div>
-	)
-}
 
 const RGBInputs = ({
 	hc,
@@ -395,7 +268,7 @@ const Inputs = () => {
 		inputType,
 		tinyColor,
 		hideOpacity: _hideOpacity,
-		showHexAlpha,
+		showHexAlpha: _showHexAlpha,
 		handleChange,
 		defaultStyles: _defaultStyles,
 		pickerIdSuffix,
@@ -407,10 +280,8 @@ const Inputs = () => {
 			id={`rbgcp-inputs-wrap${pickerIdSuffix}`}
 		>
 			<div className="flex gap-1">
-				<HexInput
-					opacity={hc?.a}
-					tinyColor={tinyColor}
-					showHexAlpha={showHexAlpha}
+				<InputHex
+					hexColor={tinyColor.toHexString()}
 					handleChange={handleChange}
 				/>
 				<InputNumberSelect
@@ -418,7 +289,6 @@ const Inputs = () => {
 					max={100}
 					min={0}
 					step={1}
-					precision={0}
 					value={Math.round(hc?.a * 100)}
 					onChange={(newVal: string | number) =>
 						handleChange(

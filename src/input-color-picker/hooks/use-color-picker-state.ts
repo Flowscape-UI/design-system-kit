@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
-import { filterHexInput, hexToRgb, parseColor, rgbToHex } from '../utils/color-utils'
+import {
+	filterHexInput,
+	hexToRgb,
+	parseColor,
+	rgbToHex,
+} from '../utils/color-utils'
 
 interface UseColorPickerStateProps {
 	value: string
@@ -17,7 +22,9 @@ export const useColorPickerState = ({
 	const [inputValue, setInputValue] = useState(hex)
 	const [livePreviewColor, setLivePreviewColor] = useState(value)
 	const [colorType, setColorType] = useState<'color' | 'gradient'>('color')
-	const [opacityValue, setOpacityValue] = useState(isNaN(opacity) ? 100 : opacity)
+	const [opacityValue, setOpacityValue] = useState(
+		isNaN(opacity) ? 100 : opacity
+	)
 
 	useEffect(() => {
 		const { hex: newHex, opacity: newOpacity } = parseColor(value)

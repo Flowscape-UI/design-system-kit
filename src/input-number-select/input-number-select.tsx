@@ -152,7 +152,7 @@ export const InputNumberSelect = React.forwardRef<
 
 			const handlePointerMove = (event: PointerEvent) => {
 				if (orientation === 'vertical') {
-					// Вертикальная ориентация - движение по оси Y
+					// Vertical orientation - movement along the Y axis
 					const atTopEdge = event.clientY <= 1
 					const atBottomEdge = event.clientY >= window.innerHeight - 1
 
@@ -162,7 +162,7 @@ export const InputNumberSelect = React.forwardRef<
 						}
 					} else {
 						stopAutoIncrement()
-						const totalDeltaY = startY - event.clientY // Инвертируем: вверх = +
+						const totalDeltaY = startY - event.clientY // Invert: top = +
 						const delta = totalDeltaY * effectiveStep
 						let newValue = calculateByProgression(
 							startValue,
@@ -175,7 +175,7 @@ export const InputNumberSelect = React.forwardRef<
 						handleChange(removeTrailingZeros(newValue, precision))
 					}
 				} else {
-					// Горизонтальная ориентация - движение по оси X
+					// Horizontal orientation - movement along the X axis
 					const atLeftEdge = event.clientX <= 1
 					const atRightEdge = event.clientX >= window.innerWidth - 1
 

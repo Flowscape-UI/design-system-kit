@@ -6,7 +6,6 @@ import { cn } from '../shared/utils/cn'
 export interface InputHexWithPreviewProps
 	extends Omit<React.ComponentProps<'input'>, 'onChange' | 'value'> {
 	hexColor: string
-	opacity?: number
 	handleChange: (hexColor: string) => void
 	className?: string
 	classNameInput?: string
@@ -16,6 +15,11 @@ export interface InputHexWithPreviewProps
 	onIconClick?: (hexColor: string) => void
 	onIconPointerDown?: (hexColor: string) => void
 	onIconPointerUp?: (hexColor: string) => void
+	/**
+	 * Show and allow alpha channel input (another 2 hex symbols).
+	 * By default disabled (input only 6 symbols).
+	 */
+	showAlpha?: boolean
 }
 
 const THEME_CLASSES = {
@@ -43,7 +47,6 @@ export const InputHexWithPreview = React.forwardRef<
 	(
 		{
 			hexColor,
-			opacity = 1,
 			handleChange,
 			className,
 			classNameInput,
@@ -54,55 +57,67 @@ export const InputHexWithPreview = React.forwardRef<
 			onIconClick,
 			onIconPointerDown,
 			onIconPointerUp,
+			showAlpha = false,
 			...props
 		},
 		ref
 	) => {
-		const dragRef = useRef<HTMLButtonElement>(null)
-		const [disable, setDisable] = useState('')
-		const hex = tc(hexColor).toHex()
-		const [newHex, setNewHex] = useState(hex)
+		const [isEditing, setIsEditing] = useState(false)
+
+		// Normalize input color through tinycolor2
+		const color = tc(hexColor)
+		const hex = color.toHex() // 6 symbols without #
+		const alpha = color.getAlpha() // 0-1
+		const alphaHex = Math.round(alpha * 255)
+			.toString(16)
+			.padStart(2, '0')
+		// Full value: if showAlpha and alpha < 1, add alpha
+		const hexFromProp = showAlpha && alpha < 1 ? hex + alphaHex : hex
+
+		const [localHex, setLocalHex] = useState(hexFromProp)
 		const dragStartValue = useRef(0)
 
 		useEffect(() => {
-			if (disable !== 'hex') {
-				setNewHex(hex)
+			if (!isEditing) {
+				setLocalHex(hexFromProp)
 			}
-		}, [hexColor, disable, hex])
-		const hexFocus = () => {
-			setDisable('hex')
-		}
+		}, [hexColor, isEditing, hexFromProp])
 
-		const hexBlur = () => {
-			setDisable('')
-		}
-
-		const getCurrenthexColor = () => {
-			return newHex || hex
+		// Helper: converts 8-symbol hex to format with alpha
+		const convertToHex8 = (hex8: string) => {
+			const base = hex8.slice(0, 6)
+			const alphaHex = hex8.slice(6, 8)
+			const alphaDecimal = parseInt(alphaHex, 16) / 255
+			return tc(`#${base}`).setAlpha(alphaDecimal).toHex8String().toUpperCase()
 		}
 
 		const handleHexInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-			const val = e.target.value
-			setNewHex(val)
-			if (tc(val).isValid()) {
-				const hexWithHash = val.startsWith('#') ? val : `#${val}`
-				handleChange(hexWithHash)
+			const maxLen = showAlpha ? 8 : 6
+			// Filter only hex symbols, truncate by length
+			const filtered = e.target.value
+				.replace(/[^0-9a-fA-F]/g, '')
+				.slice(0, maxLen)
+				.toUpperCase()
+
+			setLocalHex(filtered)
+
+			// Emit change only when full length
+			if (filtered.length === 6) {
+				handleChange(`#${filtered}`)
+			} else if (filtered.length === 8 && showAlpha) {
+				handleChange(convertToHex8(filtered))
 			}
 		}
 
 		const handleIconClick = () => {
-			if (onIconClick) {
-				onIconClick(getCurrenthexColor())
-			}
+			onIconClick?.(localHex)
 		}
 
 		const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
 			if (disabled || isDisabledMouseEvent) return
 			e.preventDefault()
 
-			if (onIconPointerDown) {
-				onIconPointerDown(getCurrenthexColor())
-			}
+			onIconPointerDown?.(localHex)
 
 			const target = e.currentTarget
 			target.setPointerCapture(e.pointerId)
@@ -119,7 +134,11 @@ export const InputHexWithPreview = React.forwardRef<
 
 			dragStartValue.current = parseInt(hex, 16)
 			const startX = e.clientX
-			setDisable('hex')
+			setIsEditing(true)
+
+			// Save initial alpha to preserve it during drag
+			const initialAlpha =
+				showAlpha && localHex.length >= 8 ? localHex.slice(6, 8) : ''
 
 			const handlePointerMove = (event: PointerEvent) => {
 				const movementX = event.clientX - startX
@@ -129,18 +148,27 @@ export const InputHexWithPreview = React.forwardRef<
 				)
 				newhexColorInt = Math.max(0, Math.min(0xffffff, newhexColorInt))
 
-				const newhexColorHex = newhexColorInt.toString(16).padStart(6, '0')
-				setNewHex(newhexColorHex)
-				handleChange(`#${newhexColorHex}`)
+				// Drag changes only base color (6 symbols)
+				const newBaseHex = newhexColorInt
+					.toString(16)
+					.padStart(6, '0')
+					.toUpperCase()
+
+				// Update local state with new base color + preserved alpha
+				setLocalHex(newBaseHex + initialAlpha)
+
+				// Emit with alpha if it exists, otherwise just base color
+				if (showAlpha && initialAlpha) {
+					handleChange(convertToHex8(newBaseHex + initialAlpha))
+				} else {
+					handleChange(`#${newBaseHex}`)
+				}
 			}
 
 			const handlePointerUp = (event: PointerEvent) => {
 				target.releasePointerCapture(event.pointerId)
-				setDisable('')
-
-				if (onIconPointerUp) {
-					onIconPointerUp(getCurrenthexColor())
-				}
+				setIsEditing(false)
+				onIconPointerUp?.(localHex)
 
 				const styleToRemove = document.getElementById('dragging-cursor-style')
 				if (styleToRemove) {
@@ -154,13 +182,11 @@ export const InputHexWithPreview = React.forwardRef<
 			document.addEventListener('pointerup', handlePointerUp)
 		}
 
-		const displayValue = newHex
+		// Color for preview with opacity
+		const previewColor = tc(hexColor).toRgbString()
 
-		const hexhexColor = tc(hexColor).toHex()
-		const rgbahexColor = tc(hexhexColor).setAlpha(opacity).toRgbString()
-
-		const renderIcon = useMemo(() => {
-			return (
+		const renderIcon = useMemo(
+			() => (
 				<div
 					className={cn(
 						'w-5 h-5 rounded border-2 flex-shrink-0',
@@ -168,12 +194,11 @@ export const InputHexWithPreview = React.forwardRef<
 						THEME_CLASSES.dark.preview,
 						classNamePreview
 					)}
-					style={{
-						backgroundColor: rgbahexColor,
-					}}
+					style={{ backgroundColor: previewColor }}
 				/>
-			)
-		}, [rgbahexColor, classNamePreview])
+			),
+			[previewColor, classNamePreview]
+		)
 
 		return (
 			<div
@@ -186,7 +211,6 @@ export const InputHexWithPreview = React.forwardRef<
 			>
 				<button
 					type="button"
-					ref={dragRef}
 					onClick={handleIconClick}
 					onPointerDown={handlePointerDown}
 					className={cn(
@@ -222,10 +246,11 @@ export const InputHexWithPreview = React.forwardRef<
 						THEME_CLASSES.dark.input,
 						classNameInput
 					)}
-					value={displayValue?.toUpperCase()}
+					value={localHex.toLocaleUpperCase()}
 					onChange={handleHexInput}
-					onFocus={hexFocus}
-					onBlur={hexBlur}
+					onFocus={() => setIsEditing(true)}
+					onBlur={() => setIsEditing(false)}
+					maxLength={showAlpha ? 8 : 6}
 					disabled={disabled}
 					ref={ref}
 					{...props}

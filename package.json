@@ -1,7 +1,7 @@
 {
 	"name": "@flowscape-ui/design-system-kit",
 	"version": "1.0.0",
-	"description": "A comprehensive React design system kit with color picker, input range, and other essential UI components. Built with TypeScript and optimized for modern web applications",
+	"description": "Professional React UI components for color management and design systems. Features ColorPicker, InputHex with alpha channel, InputNumberSelect, and more. Built with TypeScript.",
 	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",

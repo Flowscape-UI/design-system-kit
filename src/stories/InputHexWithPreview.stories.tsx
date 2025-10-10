@@ -28,10 +28,6 @@ const meta = {
 			control: 'color',
 			description: 'HEX color string (e.g., "#AF33F2")',
 		},
-		opacity: {
-			control: { type: 'range', min: 0, max: 1, step: 0.01 },
-			description: 'Opacity value (0-1)',
-		},
 		disabled: {
 			control: 'boolean',
 			description: 'Disable component',
@@ -44,6 +40,11 @@ const meta = {
 			control: 'text',
 			description: 'Custom classes for color preview',
 		},
+		showAlpha: {
+			control: 'boolean',
+			description:
+				'Allow manual input of alpha channel (adds 2 hex symbols, total up to 8)',
+		},
 	},
 } satisfies Meta<typeof InputHexWithPreview>
 
@@ -55,10 +56,10 @@ type Story = StoryObj<typeof meta>
  * Use Controls to change parameters.
  * Switch background in toolbar to change theme (light/dark).
  */
+
 export const Default: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -67,22 +68,17 @@ export const Default: Story = {
 		return (
 			<div className="space-y-4">
 				<InputHexWithPreview hexColor={color} handleChange={setColor} />
-				<p className="text-sm text-gray-600 dark:text-gray-300">
-					Current color: {color.toUpperCase()}
+				<p className="text-center text-sm text-gray-600 dark:text-gray-300">
+					Current color: {color}
 				</p>
 			</div>
 		)
 	},
 }
 
-/**
- * ## Color palette
- * Interactive palette with multiple colors.
- */
 export const ColorPalette: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -108,12 +104,11 @@ export const ColorPalette: Story = {
 						<InputHexWithPreview
 							key={index}
 							hexColor={color}
-							opacity={1}
 							handleChange={handleColorChange(index)}
 						/>
 					))}
 				</div>
-				<div className="flex gap-2 flex-wrap">
+				<div className="flex justify-center gap-2 flex-wrap">
 					{colors.map((color, index) => (
 						<div
 							key={index}
@@ -134,7 +129,6 @@ export const ColorPalette: Story = {
 export const GradientCreator: Story = {
 	args: {
 		hexColor: '#FF6B6B',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -148,21 +142,13 @@ export const GradientCreator: Story = {
 						<p className="text-xs text-gray-600 dark:text-gray-300 text-center">
 							Start
 						</p>
-						<InputHexWithPreview
-							hexColor={color1}
-							opacity={1}
-							handleChange={setColor1}
-						/>
+						<InputHexWithPreview hexColor={color1} handleChange={setColor1} />
 					</div>
 					<div className="space-y-2">
 						<p className="text-xs text-gray-600 dark:text-gray-300 text-center">
 							End
 						</p>
-						<InputHexWithPreview
-							hexColor={color2}
-							opacity={1}
-							handleChange={setColor2}
-						/>
+						<InputHexWithPreview hexColor={color2} handleChange={setColor2} />
 					</div>
 				</div>
 				<div
@@ -177,46 +163,37 @@ export const GradientCreator: Story = {
 }
 
 /**
- * ## With opacity
+ * ## With alpha
  * Component with alpha channel support.
  */
-export const WithOpacity: Story = {
+export const WithAlpha: Story = {
 	args: {
-		hexColor: '#AF33F2',
-		opacity: 1,
+		hexColor: '#AF33F2DD',
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
-		const [color, setColor] = useState('#AF33F2')
-		const [opacity, setOpacity] = useState(0.75)
+		const [color, setColor] = useState('#AF33F2DD')
 
 		const handleChange = (newColor: string) => {
 			setColor(newColor)
 		}
+
+		const currentAlpha = tc(color).getAlpha()
 
 		return (
 			<div className="space-y-4 flex flex-col items-center gap-4">
 				<div className="flex flex-col gap-3 items-center">
 					<InputHexWithPreview
 						hexColor={color}
-						opacity={opacity}
 						handleChange={handleChange}
+						showAlpha
 					/>
 					<div className="space-y-1 flex gap-4">
 						<label className="text-xs text-gray-600 dark:text-gray-300">
-							Opacity
+							Alpha:
 						</label>
-						<input
-							type="range"
-							min="0"
-							max="1"
-							step="0.01"
-							value={opacity}
-							onChange={e => setOpacity(parseFloat(e.target.value))}
-							className="w-32"
-						/>
-						<p className="text-xs text-gray-500 dark:text-gray-400">
-							{Math.round(opacity * 100)}%
+						<p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+							{Math.round(currentAlpha * 100)}% ({color})
 						</p>
 					</div>
 				</div>
@@ -231,10 +208,15 @@ export const WithOpacity: Story = {
 					<div
 						className="absolute inset-0 rounded-lg"
 						style={{
-							backgroundColor: tc(color).setAlpha(opacity).toRgbString(),
+							backgroundColor: tc(color).toRgbString(),
 						}}
 					/>
 				</div>
+				<p className="text-xs text-gray-600 dark:text-gray-300 text-center max-w-md">
+					Enter last 2 hex-symbols for alpha-channel (e.g., 80 = 50%
+					transparency). Preview shows real transparency on chessboard
+					background.
+				</p>
 			</div>
 		)
 	},
@@ -247,7 +229,6 @@ export const WithOpacity: Story = {
 export const ColorScheme: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -267,7 +248,6 @@ export const ColorScheme: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={primaryColor}
-						opacity={1}
 						handleChange={setPrimaryColor}
 					/>
 				</div>
@@ -282,7 +262,7 @@ export const ColorScheme: Story = {
 							style={{ backgroundColor: complementary }}
 						/>
 						<span className="text-sm text-gray-600 dark:text-gray-400 font-mono">
-							{complementary.toUpperCase()}
+							{complementary}
 						</span>
 					</div>
 				</div>
@@ -299,7 +279,7 @@ export const ColorScheme: Story = {
 									style={{ backgroundColor: color.toHexString() }}
 								/>
 								<span className="text-xs text-gray-600 dark:text-gray-400 font-mono">
-									{color.toHexString().toUpperCase()}
+									{color.toHexString()}
 								</span>
 							</div>
 						))}
@@ -318,7 +298,7 @@ export const ColorScheme: Story = {
 									style={{ backgroundColor: color.toHexString() }}
 								/>
 								<span className="text-xs text-gray-600 dark:text-gray-400 font-mono">
-									{color.toHexString().toUpperCase()}
+									{color.toHexString()}
 								</span>
 							</div>
 						))}
@@ -336,7 +316,6 @@ export const ColorScheme: Story = {
 export const TintsAndShades: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -361,11 +340,7 @@ export const TintsAndShades: Story = {
 					<p className="text-sm font-medium text-gray-700 dark:text-gray-300">
 						Base color
 					</p>
-					<InputHexWithPreview
-						hexColor={color}
-						opacity={1}
-						handleChange={setColor}
-					/>
+					<InputHexWithPreview hexColor={color} handleChange={setColor} />
 				</div>
 
 				<div className="space-y-2">
@@ -411,7 +386,6 @@ export const TintsAndShades: Story = {
 export const RandomColors: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -446,14 +420,13 @@ export const RandomColors: Story = {
 						<InputHexWithPreview
 							key={index}
 							hexColor={color}
-							opacity={1}
 							handleChange={handleColorChange(index)}
 						/>
 					))}
 				</div>
 				<button
 					onClick={handleGenerate}
-					className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center gap-2"
+					className="mx-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center gap-2"
 				>
 					<Palette size={16} />
 					Generate new colors
@@ -470,7 +443,6 @@ export const RandomColors: Story = {
 export const DisabledState: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -484,7 +456,6 @@ export const DisabledState: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color}
-						opacity={1}
 						handleChange={() => {}}
 						disabled={true}
 					/>
@@ -502,7 +473,6 @@ export const DisabledState: Story = {
 export const MouseEventControl: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -517,7 +487,6 @@ export const MouseEventControl: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color1}
-						opacity={1}
 						handleChange={setColor1}
 						isDisabledMouseEvent={false}
 					/>
@@ -532,7 +501,6 @@ export const MouseEventControl: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color2}
-						opacity={1}
 						handleChange={setColor2}
 						isDisabledMouseEvent={true}
 					/>
@@ -552,7 +520,6 @@ export const MouseEventControl: Story = {
 export const CustomStyles: Story = {
 	args: {
 		hexColor: '#AF33F2',
-		opacity: 1,
 		handleChange: (newColor: string) => {},
 	},
 	render: () => {
@@ -568,7 +535,6 @@ export const CustomStyles: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color1}
-						opacity={1}
 						handleChange={setColor1}
 						classNamePreview="w-10 h-10"
 					/>
@@ -580,7 +546,6 @@ export const CustomStyles: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color2}
-						opacity={1}
 						handleChange={setColor2}
 						classNamePreview="rounded-full"
 					/>
@@ -592,7 +557,6 @@ export const CustomStyles: Story = {
 					</p>
 					<InputHexWithPreview
 						hexColor={color3}
-						opacity={1}
 						handleChange={setColor3}
 						classNamePreview="border-0"
 					/>

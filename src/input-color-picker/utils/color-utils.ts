@@ -84,66 +84,72 @@ export const hexToRgb = (hexStr: string): RGB | null => {
  * Конвертирует прозрачность (0-100) в HEX (00-FF)
  */
 export const opacityToHex = (opacity: number): string => {
-    if (opacity < 0 || opacity > 100) return 'ff'
-    const alpha = Math.round((opacity / 100) * 255)
-    return alpha.toString(16).padStart(2, '0')
+	if (opacity < 0 || opacity > 100) return 'ff'
+	const alpha = Math.round((opacity / 100) * 255)
+	return alpha.toString(16).padStart(2, '0')
 }
 
 /**
  * Создает display color с учетом прозрачности
  */
 export const createDisplayColor = (
-    livePreviewColor: string,
-    opacityValue: number
+	livePreviewColor: string,
+	opacityValue: number
 ): string => {
-    let displayColor =
-        livePreviewColor &&
-        (livePreviewColor.includes('gradient') ||
-            livePreviewColor.startsWith('rgba') ||
-            livePreviewColor.startsWith('rgb') ||
-            livePreviewColor.startsWith('#'))
-            ? livePreviewColor
-            : '#FFFFFF'
+	let displayColor =
+		livePreviewColor &&
+		(livePreviewColor.includes('gradient') ||
+			livePreviewColor.startsWith('rgba') ||
+			livePreviewColor.startsWith('rgb') ||
+			livePreviewColor.startsWith('#'))
+			? livePreviewColor
+			: '#FFFFFF'
 
-    // Обработка градиентов - возвращаем как есть
-    // Opacity для градиентов применяется напрямую к rgba цветам в handleOpacityChange
-    if (displayColor.includes('gradient')) {
-        return displayColor
-    }
+	// Обработка градиентов - возвращаем как есть
+	// Opacity для градиентов применяется напрямую к rgba цветам в handleOpacityChange
+	if (displayColor.includes('gradient')) {
+		return displayColor
+	}
 
-    // Нормализация rgb/rgba -> rgba с учётом текущей opacityValue
-    if (displayColor.startsWith('rgb')) {
-        const match = displayColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/)
-        if (match) {
-            const r = parseInt(match[1], 10)
-            const g = parseInt(match[2], 10)
-            const b = parseInt(match[3], 10)
-            const a = match[4] !== undefined ? parseFloat(match[4]) : undefined
-            const finalA = isNaN(opacityValue) ? (typeof a === 'number' ? a : 1) : opacityValue / 100
-            displayColor = `rgba(${r}, ${g}, ${b}, ${finalA})`
-        }
-    }
+	// Нормализация rgb/rgba -> rgba с учётом текущей opacityValue
+	if (displayColor.startsWith('rgb')) {
+		const match = displayColor.match(
+			/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/
+		)
+		if (match) {
+			const r = parseInt(match[1], 10)
+			const g = parseInt(match[2], 10)
+			const b = parseInt(match[3], 10)
+			const a = match[4] !== undefined ? parseFloat(match[4]) : undefined
+			const finalA = isNaN(opacityValue)
+				? typeof a === 'number'
+					? a
+					: 1
+				: opacityValue / 100
+			displayColor = `rgba(${r}, ${g}, ${b}, ${finalA})`
+		}
+	}
 
-    // HEX -> HEXA с учётом opacityValue
-    if (displayColor.startsWith('#')) {
-        let hexVal = displayColor.substring(1)
-        if (hexVal.length === 3 || hexVal.length === 4) {
-            hexVal = hexVal
-                .split('')
-                .map(char => char + char)
-                .join('')
-        }
-        const rgbHex = hexVal.substring(0, 6)
-        displayColor = `#${rgbHex}${opacityToHex(opacityValue)}`
-    }
+	// HEX -> HEXA с учётом opacityValue
+	if (displayColor.startsWith('#')) {
+		let hexVal = displayColor.substring(1)
+		if (hexVal.length === 3 || hexVal.length === 4) {
+			hexVal = hexVal
+				.split('')
+				.map(char => char + char)
+				.join('')
+		}
+		const rgbHex = hexVal.substring(0, 6)
+		displayColor = `#${rgbHex}${opacityToHex(opacityValue)}`
+	}
 
-    return displayColor
+	return displayColor
 }
 
 /**
  * Фильтрует ввод для HEX значения
  */
 export const filterHexInput = (value: string): string => {
-    const filteredValue = value.replace(/[^0-9a-fA-F]/g, '')
-    return filteredValue.substring(0, 6).toUpperCase()
+	const filteredValue = value.replace(/[^0-9a-fA-F]/g, '')
+	return filteredValue.substring(0, 6).toUpperCase()
 }

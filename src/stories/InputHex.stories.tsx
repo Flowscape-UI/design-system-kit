@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import React, { useState } from 'react'
+import tc from 'tinycolor2'
 import { InputHex } from '../input-hex'
 
 const meta = {
@@ -34,6 +35,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Disable mouse dragging',
 		},
+		showAlpha: {
+			control: 'boolean',
+			description: 'Show and allow alpha channel input (8 symbols)',
+		},
 	},
 } satisfies Meta<typeof InputHex>
 
@@ -56,8 +61,64 @@ export const Default: Story = {
 		return (
 			<div className="space-y-4">
 				<InputHex hexColor={color} handleChange={setColor} />
-				<p className="text-sm text-gray-600 dark:text-gray-300">
+				<p className="text-center text-sm text-gray-600 dark:text-gray-300">
 					Current color: {color.toUpperCase()}
+				</p>
+			</div>
+		)
+	},
+}
+
+/**
+ * ## With alpha
+ * Component with alpha channel support.
+ */
+export const WithAlpha: Story = {
+	args: {
+		hexColor: '#AF33F2DD',
+		handleChange: (newColor: string) => {},
+	},
+	render: () => {
+		const [color, setColor] = useState('#AF33F2DD')
+
+		const handleChange = (newColor: string) => {
+			setColor(newColor)
+		}
+
+		const currentAlpha = tc(color).getAlpha()
+
+		return (
+			<div className="space-y-4 flex flex-col items-center gap-4">
+				<div className="flex flex-col gap-3 items-center">
+					<InputHex hexColor={color} handleChange={handleChange} showAlpha />
+					<div className="space-y-1 flex gap-4">
+						<label className="text-xs text-gray-600 dark:text-gray-300">
+							Alpha:
+						</label>
+						<p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+							{Math.round(currentAlpha * 100)}% ({color})
+						</p>
+					</div>
+				</div>
+				<div className="relative w-48 h-48 rounded-lg overflow-hidden">
+					<div
+						className="absolute inset-0"
+						style={{
+							backgroundImage:
+								'repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 20px 20px',
+						}}
+					/>
+					<div
+						className="absolute inset-0 rounded-lg"
+						style={{
+							backgroundColor: tc(color).toRgbString(),
+						}}
+					/>
+				</div>
+				<p className="text-xs text-gray-600 dark:text-gray-300 text-center max-w-md">
+					Enter last 2 hex-symbols for alpha-channel (e.g., 80 = 50%
+					transparency). Preview shows real transparency on chessboard
+					background.
 				</p>
 			</div>
 		)

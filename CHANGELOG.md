@@ -1,15 +1,197 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [1.3.0] - 2025-10-11
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Added
+
+**🌈 Gradient Support for InputColorPicker**
+
+- **Full gradient support** for `InputColorPicker` component
+  - Linear gradients with multiple color stops
+  - Automatic gradient detection and UI switching
+  - Click gradient text to copy CSS to clipboard
+  - Opacity control applies to all gradient colors
+
+- **Gradient Input Features**
+  - Displays gradient as "Linear" text with copy functionality
+  - Customizable width via `classNameGradientInput` prop
+  - Automatic mode switching between solid color and gradient
+  - Preserves gradient format during opacity changes
+
+- **Opacity Management**
+  - Opacity applies to all rgba colors in gradients
+  - Smooth drag control without value jumps
+  - Separate opacity state for gradients vs solid colors
+  - Real-time preview updates
+
+- **New Props**
+  - `classNameGradientInput?: string` - Custom classes for gradient input
+  - `showGradient?: boolean` - Enable gradient mode in ColorPicker popup
+  - Enhanced `onChange` callback with gradient support
+
+### Changed
+
+- **InputColorPicker Component**
+  - Refactored to support both solid colors and gradients
+  - Improved state management with `colorType` detection
+  - Enhanced `useColorPickerState` hook with gradient logic
+  - Better synchronization between gradient and opacity
+
+- **Opacity Control**
+  - Modified to apply opacity to all rgba colors in gradients
+  - Fixed drag behavior to prevent value resets
+  - Improved `useEffect` dependencies for gradient handling
+
+### Fixed
+
+- 🐛 Fixed opacity jumping between current value and 100% during drag for gradients
+- 🐛 Fixed gradient input width inconsistency with solid color input
+- 🐛 Fixed initial colorType not detecting gradients on mount
+- 🐛 Fixed opacity not applying to all colors in gradient string
+- 🐛 Improved gradient CSS parsing and manipulation
+
+### Documentation
+
+- Updated README.md with comprehensive InputColorPicker documentation
+- Added gradient examples and usage patterns
+- Enhanced Storybook with 7 interactive examples:
+  - Default, BackgroundColor, TextColor
+  - GradientBackground, MultipleColors
+  - CardDesign, OpacityControl
+- Added API reference for all InputColorPicker props
+
+### Technical Improvements
+
+- **TypeScript**
+  - Added `classNameGradientInput` to InputColorPickerProps interface
+  - Better type safety for gradient detection
+  - Improved prop type definitions
+
+- **Code Quality**
+  - Modular gradient handling utilities
+  - Consistent code formatting
+  - Better error handling for clipboard operations
+
+- **Bundle Size**
+  - No significant increase in bundle size
+  - Tree-shakeable as before
+  - Optimized gradient regex operations
+
+### Breaking Changes
+
+**None** — This release is fully backward compatible.
+
+- Components without gradient support work exactly as before
+- All existing solid color functionality preserved
+- New gradient features are opt-in via `showGradient` prop
+
+## [1.2.0] - 2025-10-10
+
+### Added
+
+**🎨 Alpha Channel Support for HEX Inputs**
+
+- **`showAlpha` prop** for `InputHex` and `InputHexWithPreview` components
+  - Enable 8-symbol HEX input (RRGGBBAA format)
+  - Supports alpha values from 00 (transparent) to FF (opaque)
+  - Backward compatible — defaults to 6-symbol input
+
+- **Automatic Preview Transparency**
+  - `InputHexWithPreview` now displays alpha channel in preview
+  - Preview shows real transparency on checkerboard background
+  - Alpha affects preview color automatically
+
+- **Smart Drag Behavior**
+  - Drag changes only base color (first 6 symbols)
+  - Alpha channel is preserved during drag operations
+  - No conflicts between drag and alpha input
+
+- **Uppercase Formatting**
+  - All HEX values automatically converted to uppercase
+  - Consistent formatting across all inputs
+  - Applied to both manual input and drag operations
+
+### Changed
+
+- **InputHex Component**
+  - Refactored state management (`disable` → `isEditing`)
+  - Improved local state handling (`newHex` → `localHex`)
+  - Enhanced input validation and filtering
+  - Better synchronization with parent component
+
+- **InputHexWithPreview Component**
+  - Removed `opacity` prop (replaced by alpha channel in hex value)
+  - Preview now uses alpha from hex color directly
+  - Simplified API — one source of truth for transparency
+
+### Fixed
+
+- 🐛 Fixed bug where drag would reset to previous value when alpha present
+- 🐛 Fixed race condition in state synchronization after drag
+- 🐛 Fixed alpha preservation during drag operations
+- 🐛 Improved `useEffect` dependencies for better state management
+
+### Documentation
+
+- Updated README.md with alpha channel examples
+- Added comprehensive API reference for `showAlpha` prop
+- Enhanced Storybook examples with alpha demonstrations
+- Improved component descriptions and feature lists
+- Added migration notes for `opacity` prop removal
+
+### Technical Improvements
+
+- **TypeScript**
+  - Updated interfaces with `showAlpha?: boolean`
+  - Better type safety for hex color validation
+  - Improved prop type definitions
+
+- **Code Quality**
+  - Consistent code formatting across components
+  - Better error handling for edge cases
+  - Improved component architecture
+
+- **Bundle Size**
+  - No increase in bundle size
+  - Tree-shakeable as before
+  - Optimized imports
+
+### Breaking Changes
+
+**None** — This release is fully backward compatible.
+
+- Components without `showAlpha` prop work exactly as before (6 symbols)
+- Removed `opacity` prop from `InputHexWithPreview` (use alpha in hex value instead)
+- All existing code continues to work without modifications
+
+### Migration Guide
+
+#### Using Alpha Channel (Optional)
+
+```tsx
+// Before (v1.1.0)
+<InputHexWithPreview hexColor="#FF5733" opacity={0.5} handleChange={setColor} />
+
+// After (v1.2.0) - Use alpha in hex value
+<InputHexWithPreview hexColor="#FF5733DD" handleChange={setColor} showAlpha />
+```
+
+#### No Changes Required
+
+If you're not using alpha channel, no changes are needed:
+
+```tsx
+// Still works exactly the same
+<InputHex hexColor="#FF5733" handleChange={setColor} />
+<InputHexWithPreview hexColor="#FF5733" handleChange={setColor} />
+```
 
 ## [1.1.0] - 2025-10-08
 
 ### Added
 
 **🎉 13 New Specialized Input Components**
+
 - `OpacityInput` - Opacity control (0-100%)
 - `AngleInput` - Rotation angle control (0-360°)
 - `BorderRadiusInput` - Border radius control with unit support
@@ -25,6 +207,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `BlurInput` - Blur effect control
 
 **Advanced Input Features**
+
 - 🎛️ **5 Progression Types**: linear, arithmetic, geometric, paraboloid, exponential
 - 🔄 **Drag-to-change** functionality for all numeric inputs
 - 📐 **Dual orientation**: horizontal and vertical layouts
@@ -35,6 +218,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🎨 **Full customization**: className props for all elements
 
 **Modular Architecture**
+
 - Refactored `InputColorPicker` into modular structure:
   - `hooks/` - useColorPickerState, useDraggable
   - `utils/` - color conversion utilities
@@ -43,6 +227,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Consistent component patterns across all inputs
 
 **Documentation**
+
 - Added `INPUTS_GUIDE.md` with comprehensive input documentation
 - Updated README.md with new components section
 - Added Storybook examples for all input components
@@ -99,6 +284,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-10-06
 
 ### Changed
+
 - **Project Renamed**: `@flowscape-ui/color-picker` → `@flowscape-ui/design-system-kit`
 - Updated package name to reflect expanded scope as a comprehensive design system
 - Enhanced keywords for better discoverability (design-system, design-system-kit, ui-components, component-library, input-range, ui-kit)
@@ -106,195 +292,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prepared for future expansion with additional UI components beyond color picker
 
 ### Note
+
 This is the initial release under the new name. The library now serves as a foundation for a complete design system kit, with plans to include input range components and other essential UI elements.
-
-## [1.1.0] - 2024-12-19
-
-### Added
-- **Advanced Input Components System**
-  - New `InputNumberSelect` component with drag-and-drop functionality
-  - Support for multiple progression types: linear, arithmetic, geometric, paraboloid, exponential
-  - Horizontal and vertical orientation support
-  - Configurable precision and step values
-  - Icon support (string or React component)
-  - Enhanced validation with min/max constraints
-
-- **Specialized Color Input Component**
-  - `InputColorPicker` component with integrated color picker
-  - Real-time color preview with live updates
-  - Gradient support (linear and radial)
-  - Opacity control with visual slider
-  - Background visibility toggle (show/hide)
-  - Background deletion functionality
-  - HEX and RGBA format support
-  - Draggable color picker modal
-
-- **Utility Hooks and Functions**
-  - `cn()` utility for Tailwind CSS class merging
-  - `removeTrailingZeros()` function for number formatting
-  - Enhanced TypeScript interfaces and types
-
-- **New Dependencies**
-  - `lucide-react` for modern icon set
-  - `react-icons` for additional icon support
-  - `tailwind-merge` for intelligent class merging
-
-### Changed
-- **Component Architecture**
-  - Moved `InputNumberSelect` to `src/components/input/` directory
-  - Updated import paths in `Inputs.tsx` component
-  - Improved component organization and modularity
-
-- **Styling System**
-  - Integrated Tailwind CSS for modern styling
-  - Enhanced dark theme support
-  - Improved responsive design
-  - Better visual feedback and animations
-
-- **User Experience**
-  - More intuitive drag-and-drop interactions
-  - Enhanced visual feedback for value changes
-  - Compact design with preserved functionality
-  - Better keyboard accessibility
-  - Smooth transitions and animations
-
-### Technical Improvements
-- **TypeScript Enhancements**
-  - Extended interfaces with better type safety
-  - Improved component prop definitions
-  - Better error handling and validation
-
-- **Performance Optimizations**
-  - Optimized React hooks usage
-  - Better component re-rendering patterns
-  - Improved memory management
-
-- **Code Quality**
-  - Modular architecture with separated concerns
-  - Reusable utility functions
-  - Better code organization and maintainability
-
-### Dependencies
-- Added `lucide-react@^0.544.0`
-- Added `react-icons@^5.5.0`
-- Added `tailwind-merge@^3.3.1`
-- Kept `tinycolor2@^1.6.0` for color manipulation
-
-## [1.0.0] - 2024-12-19
-
-### Added
-- **Core Color Picker Component**
-  - Full-featured React color picker for whiteboard systems
-  - Support for multiple color formats: RGB, HSL, HSV, CMYK, HEX
-  - Gradient support (linear and radial)
-  - Eye dropper functionality for screen color picking
-
-- **Advanced Features**
-  - Dark/light mode with automatic theme detection
-  - Highly customizable with hide/show options for all components
-  - Preset color support with custom color arrays
-  - Advanced sliders for fine-tuning colors
-  - Color guide and comparable colors display
-
-- **Component System**
-  - Modular component architecture
-  - `ColorPicker` main component
-  - `useColorPicker` hook for advanced usage
-  - Individual components: ColorSpectrum, Hue, Opacity, Controls, Inputs, Presets
-
-- **Configuration Options**
-  - Custom dimensions (width/height)
-  - Configurable bar and crosshair sizes
-  - Default color and gradient values
-  - Custom styling support
-  - Localization support
-
-- **Developer Experience**
-  - Full TypeScript support with type definitions
-  - Comprehensive documentation and examples
-  - Storybook playground with multiple examples
-  - ESLint configuration for code quality
-
-- **Build System**
-  - Vite-based development environment
-  - TSUP for library building
-  - Ladle for component development
-  - Vitest for testing
-
-### Dependencies
-- `react@>=18` (peer dependency)
-- `react-dom@>=18` (peer dependency)
-- `tinycolor2@^1.6.0` for color manipulation
-- `@types/tinycolor2@^1.4.4` for TypeScript support
-
-### Documentation
-- Comprehensive README.md with installation and usage examples
-- Complete API documentation
-- Multiple playground examples demonstrating all features
-- Browser support information
-- Contributing guidelines
-
----
-
-## Version History Summary
-
-### v1.1.0 - Major Enhancement Release
-- **Focus**: Advanced input components and improved UX
-- **Key Features**: Drag-and-drop inputs, specialized color picker, Tailwind CSS integration
-- **Impact**: Significantly enhanced user experience and component flexibility
-
-### v1.0.0 - Initial Release
-- **Focus**: Core color picker functionality
-- **Key Features**: Multi-format color support, gradients, eye dropper, customization
-- **Impact**: Solid foundation for whiteboard color selection needs
-
----
-
-## Migration Guide
-
-### From v1.0.0 to v1.1.0
-
-#### Breaking Changes
-- `InputNumberSelect` component moved from `src/components/InputNumberSelect.tsx` to `src/components/input/input-number-select.tsx`
-- Import path changed: `import InputNumberSelect from './InputNumberSelect'` → `import { InputNumberSelect } from './input/input-number-select'`
-
-#### New Dependencies Required
-```bash
-npm install lucide-react react-icons tailwind-merge
-```
-
-#### New Components Available
-- `InputColorPicker` - Specialized color input with integrated picker
-- Enhanced `InputNumberSelect` - Advanced numeric input with drag-and-drop
-- `Input` - Base input component with Tailwind styling
-
-#### Recommended Updates
-- Consider using new `InputColorPicker` for color selection interfaces
-- Leverage enhanced `InputNumberSelect` for better numeric input UX
-- Integrate Tailwind CSS for consistent styling
-
----
-
-## Future Roadmap
-
-### Planned Features (v1.2.0)
-- [ ] Accessibility improvements (ARIA labels, keyboard navigation)
-- [ ] Additional color format support (LAB, XYZ)
-- [ ] Color palette management
-- [ ] Undo/redo functionality
-- [ ] Color history tracking
-- [ ] Export/import color schemes
-
-### Long-term Goals
-- [ ] Web Components support
-- [ ] React Native compatibility
-- [ ] Performance optimizations for large color palettes
-- [ ] Advanced gradient editing tools
-- [ ] Color harmony suggestions
-- [ ] Integration with design systems
-
----
-
-*This changelog follows [Keep a Changelog](https://keepachangelog.com/) format and uses [Semantic Versioning](https://semver.org/) for version numbers.*
-
-

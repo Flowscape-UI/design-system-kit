@@ -21,7 +21,9 @@ export const useColorPickerState = ({
 	const [color, setColor] = useState(value)
 	const [inputValue, setInputValue] = useState(hex)
 	const [livePreviewColor, setLivePreviewColor] = useState(value)
-	const [colorType, setColorType] = useState<'color' | 'gradient'>('color')
+	const [colorType, setColorType] = useState<'color' | 'gradient'>(
+		value.includes('gradient') ? 'gradient' : 'color'
+	)
 	const [opacityValue, setOpacityValue] = useState(
 		isNaN(opacity) ? 100 : opacity
 	)
@@ -31,7 +33,12 @@ export const useColorPickerState = ({
 		setInputValue(newHex)
 		setColor(value)
 		setLivePreviewColor(value)
-		setOpacityValue(isNaN(newOpacity) ? 100 : newOpacity)
+		// Обновляем colorType на основе value
+		setColorType(value.includes('gradient') ? 'gradient' : 'color')
+		// Для градиентов не обновляем opacityValue, так как opacity встроен в rgba цвета
+		if (!value.includes('gradient')) {
+			setOpacityValue(isNaN(newOpacity) ? 100 : newOpacity)
+		}
 	}, [value])
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +64,7 @@ export const useColorPickerState = ({
 	}
 
 	const handleHexChange = () => {
-		if (hex === 'Mixed') return
+		if (hex === 'Linear') return
 
 		let newHex = inputValue.trim()
 		if (!newHex.startsWith('#')) {
@@ -86,6 +93,14 @@ export const useColorPickerState = ({
 		setOpacityValue(validOpacity)
 
 		if (color.includes('gradient')) {
+			// Применяем opacity ко всем rgba цветам в градиенте
+			const newGradient = color.replace(
+				/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/g,
+				(_match, r, g, b) => `rgba(${r}, ${g}, ${b}, ${validOpacity / 100})`
+			)
+			setColor(newGradient)
+			setLivePreviewColor(newGradient)
+			onChange?.(newGradient)
 			return
 		}
 
@@ -96,6 +111,7 @@ export const useColorPickerState = ({
 			const b = rgbMatch[3]
 			const newRgbaColor = `rgba(${r}, ${g}, ${b}, ${validOpacity / 100})`
 			setColor(newRgbaColor)
+			setLivePreviewColor(newRgbaColor)
 			onChange?.(newRgbaColor)
 		} else {
 			const rgb = hexToRgb(color)
@@ -104,6 +120,7 @@ export const useColorPickerState = ({
 					validOpacity / 100
 				})`
 				setColor(newRgbaColor)
+				setLivePreviewColor(newRgbaColor)
 				onChange?.(newRgbaColor)
 			}
 		}

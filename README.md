@@ -3,7 +3,6 @@
 # 🎨 @flowscape-ui/design-system-kit
 
 [![npm version](https://img.shields.io/npm/v/@flowscape-ui/design-system-kit.svg?style=flat-square)](https://www.npmjs.com/package/@flowscape-ui/design-system-kit)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@flowscape-ui/design-system-kit?style=flat-square)](https://bundlephobia.com/package/@flowscape-ui/design-system-kit)
 [![license](https://img.shields.io/npm/l/@flowscape-ui/design-system-kit.svg?style=flat-square)](https://github.com/flowscape-ui/design-system-kit/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 

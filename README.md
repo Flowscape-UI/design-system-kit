@@ -140,16 +140,57 @@ import { RotateCw } from 'lucide-react'
 
 ## 🎨 InputColorPicker
 
-Compact color input with popup picker.
+Compact color input with popup picker and gradient support.
 
 ```tsx
 import { InputColorPicker } from '@flowscape-ui/design-system-kit/input-color-picker'
 
-;<InputColorPicker
-	title="Background Color"
-	value="rgba(255, 255, 255, 1)"
-	onChange={setColor}
+// Solid color
+<InputColorPicker
+  title="Background Color"
+  value="rgba(255, 255, 255, 1)"
+  onChange={setColor}
+  showOpacity={true}
 />
+
+// Gradient support
+<InputColorPicker
+  title="Gradient Background"
+  value="linear-gradient(135deg, rgba(255, 107, 107, 1) 0%, rgba(78, 205, 196, 1) 100%)"
+  onChange={setGradient}
+  showOpacity={true}
+  showGradient={true}
+/>
+```
+
+**Key Features:**
+
+- ✅ Solid colors and gradients support
+- ✅ HEX input with alpha channel (8 symbols)
+- ✅ Opacity control with drag slider
+- ✅ Click gradient text to copy CSS
+- ✅ Integrated ColorPicker popup
+- ✅ Background visibility toggle
+- ✅ Customizable gradient input width
+- ✅ Dark/light theme support
+
+**Props:**
+
+```tsx
+interface InputColorPickerProps {
+  value?: string                        // Color or gradient value
+  onChange?: (color: string) => void    // Change callback
+  onOpacityChange?: (opacity: number) => void
+  title?: string                        // Picker header title
+  className?: string                    // Container classes
+  classNameGradientInput?: string       // Gradient input classes (override min-w-[187px])
+  showOpacity?: boolean                 // Show opacity control (default: true)
+  showGradient?: boolean                // Show gradient in picker (default: false)
+  pickerSize?: number                   // Picker popup size (default: 250)
+  onShowPicker?: (shown: boolean) => void
+  onHideBackground?: (hidden: boolean) => void
+  onDeleteBackground?: () => void
+}
 ```
 
 ---

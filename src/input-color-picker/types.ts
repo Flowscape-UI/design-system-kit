@@ -2,6 +2,7 @@ export interface InputColorPickerProps {
 	title?: string
 	value?: string
 	className?: string
+	classNameGradientInput?: string
 	showOpacity?: boolean
 	showGradient?: boolean
 	pickerSize?: number

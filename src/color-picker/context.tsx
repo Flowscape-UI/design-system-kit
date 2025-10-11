@@ -51,10 +51,14 @@ export default function PickerContextWrapper({
 
 	const createGradientStr = (newColors: GradientProps[]) => {
 		const sorted = newColors.sort(
-			(a: GradientProps, b: GradientProps) => a.left - b.left
+			(a: GradientProps, b: GradientProps) => (a.left ?? 0) - (b.left ?? 0)
 		)
-		const colorString = sorted?.map((cc: any) => `${cc?.value} ${cc.left}%`)
-		const newGrade = `${gradientType}(${degreeStr}, ${colorString.join(', ')})`
+		const safeDegreeStr = degreeStr && degreeStr.trim() ? degreeStr : '0deg'
+		const colorString = sorted.map((cc: any) => {
+			const safeLeft = Number.isFinite(cc?.left) ? cc.left : 0
+			return `${cc?.value} ${safeLeft}%`
+		})
+		const newGrade = `${gradientType}(${safeDegreeStr}, ${colorString.join(', ')})`
 		setPrevious({ ...previous, gradient: newGrade })
 		onChange(newGrade)
 	}
@@ -63,8 +67,10 @@ export default function PickerContextWrapper({
 		const remaining = colors?.filter(
 			(c: GradientProps) => !isUpperCase(c.value)
 		)
+		const baseLeft = typeof left === 'number' ? left : currentLeft
+		const safeLeft = Number.isFinite(baseLeft) ? baseLeft : 0
 		const newColors = [
-			{ value: newColor.toUpperCase(), left: left ?? currentLeft },
+			{ value: newColor.toUpperCase(), left: safeLeft },
 			...remaining,
 		]
 		createGradientStr(newColors)

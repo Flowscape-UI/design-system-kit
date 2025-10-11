@@ -279,10 +279,12 @@ const Inputs = () => {
 			className={`${_defaultStyles} ${_hideOpacity ? 'opacity-50' : ''}`}
 			id={`rbgcp-inputs-wrap${pickerIdSuffix}`}
 		>
-			<div className="flex gap-1">
+			<div className="flex gap-1 my-4">
 				<InputHex
 					hexColor={tinyColor.toHexString()}
 					handleChange={handleChange}
+					className="text-[#888] h-7 bg-[#1A1A1A] border border-[#333333] text-xs dark:bg-[#1A1A1A]"
+					classNameInput="text-center text-xs px-0 text-[#D4D4D4] outline-none"
 				/>
 				<InputNumberSelect
 					icon="A"

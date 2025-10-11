@@ -20,6 +20,11 @@ const config: StorybookConfig = {
 		if (process.env.STORYBOOK_BASE_HREF) {
 			cfg.base = process.env.STORYBOOK_BASE_HREF
 		}
+		// Allow all hosts for tunneling (localtunnel, cloudflared, ngrok, etc.)
+		cfg.server = {
+			...(cfg.server || {}),
+			allowedHosts: true,
+		}
 		return cfg
 	},
 }

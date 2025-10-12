@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { addons } from 'storybook/manager-api'
 import { themes } from 'storybook/theming'
 import { ColorPicker } from '../color-picker'
@@ -74,19 +74,21 @@ export const Basic: Story = {
 			<div style={{ padding: 24 }}>
 				{/* Карточка-презентация */}
 				<div
+					className="bg-white dark:bg-gray-800 dark:border-gray-600 dark:focus-within:ring-blue-400 border-1 border-gray-300 focus-within:ring-blue-500"
 					style={{
 						maxWidth: 480,
 						borderRadius: 12,
 						// тонкая рамка + глубокая тень (в духе Spectrum neutral/dark)
-						border: '1px solid #2a2f3a',
+						// border: '1px solid #2a2f3a',
 						boxShadow:
 							'0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 32px rgba(0,0,0,0.35)',
-						background: '#202020',
 						padding: 20,
 						color: '#e5e7eb',
 					}}
 				>
-					<h3 className="text-2xl text-center font-bold">Basic Color Picker</h3>
+					<h3 className="text-black dark:text-white text-2xl text-center font-bold">
+						Basic Color Picker
+					</h3>
 
 					<div className="mt-3 grid gap-4">
 						<ColorPicker
@@ -101,10 +103,9 @@ export const Basic: Story = {
 
 						{/* Инфопанель со «шахматкой» под альфу */}
 						<div
+							className="dark:border-gray-600 dark:focus-within:ring-blue-400 border-1"
 							style={{
-								border: '1px solid #2a2f3a',
 								borderRadius: 10,
-								background: '#141720',
 								padding: 14,
 								display: 'grid',
 								gap: 10,
@@ -112,6 +113,7 @@ export const Basic: Story = {
 						>
 							<div
 								id="cp-title"
+								className="text-black dark:text-white"
 								style={{
 									fontSize: 13,
 									fontWeight: 600,
@@ -120,7 +122,6 @@ export const Basic: Story = {
 							>
 								Selected Color
 							</div>
-
 							<div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
 								{/* Чекерборд + цвет поверх */}
 								<div
@@ -155,12 +156,16 @@ export const Basic: Story = {
 									/>
 								</div>
 
-								<div style={{ display: 'grid', gap: 6 }}>
+								<div
+									className="max-w-[230px]"
+									style={{ display: 'grid', gap: 6 }}
+								>
 									<code
+										className="text-black dark:text-white dark:border-gray-600 dark:focus-within:ring-blue-400 border-1 border-gray-300 focus-within:ring-blue-500"
 										style={{
 											fontSize: 13,
-											background: '#0f1320',
-											border: '1px solid #2a2f3a',
+											// background: '#0f1320',
+											// border: '1px solid #2a2f3a',
 											padding: '6px 8px',
 											borderRadius: 6,
 											minWidth: 200,
@@ -268,18 +273,18 @@ export const WithGradient: Story = {
 		return (
 			<div style={{ padding: 24 }}>
 				<div
+					className="bg-white dark:bg-gray-800 dark:border-gray-600 dark:focus-within:ring-blue-400 border-1 border-gray-300 focus-within:ring-blue-500"
 					style={{
 						maxWidth: 480,
 						borderRadius: 12,
-						border: '1px solid #2a2f3a',
+						// border: '1px solid #2a2f3a',
 						boxShadow:
 							'0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 32px rgba(0,0,0,0.35)',
-						background: '#202020',
 						padding: 20,
 						color: '#e5e7eb',
 					}}
 				>
-					<h3 className="text-2xl text-center font-bold">
+					<h3 className="text-black dark:text-white text-2xl text-center font-bold">
 						Gradient Color Picker
 					</h3>
 
@@ -295,10 +300,9 @@ export const WithGradient: Story = {
 						/>
 
 						<div
+							className="dark:border-gray-600 dark:focus-within:ring-blue-400 border-1"
 							style={{
-								border: '1px solid #2a2f3a',
 								borderRadius: 10,
-								background: '#141720',
 								padding: 14,
 								display: 'grid',
 								gap: 10,
@@ -306,6 +310,7 @@ export const WithGradient: Story = {
 						>
 							<div
 								id="cp-gradient-title"
+								className="text-black dark:text-white"
 								style={{
 									fontSize: 13,
 									fontWeight: 600,
@@ -329,12 +334,16 @@ export const WithGradient: Story = {
 									}}
 								/>
 
-								<div style={{ display: 'grid', gap: 6 }}>
+								<div
+									className="max-w-[230px]"
+									style={{ display: 'grid', gap: 6 }}
+								>
 									<code
+										className="text-black dark:text-white dark:border-gray-600 dark:focus-within:ring-blue-400 border-1 border-gray-300 focus-within:ring-blue-500"
 										style={{
 											fontSize: 11,
-											background: '#0f1320',
-											border: '1px solid #2a2f3a',
+											// background: '#0f1320',
+											// border: '1px solid #2a2f3a',
 											padding: '6px 8px',
 											borderRadius: 6,
 											minWidth: 200,

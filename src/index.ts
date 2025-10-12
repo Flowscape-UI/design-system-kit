@@ -4,6 +4,7 @@ export * from './input'
 export * from './input-color-picker'
 export * from './input-hex'
 export * from './input-hex-with-preview'
+export * from './input-image-select'
 export * from './input-number-select'
 export * from './shared'
 

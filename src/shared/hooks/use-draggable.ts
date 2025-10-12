@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import type { DragStart, Position } from '../types'
+import type { DragStart, Position } from '../../input-color-picker/types'
 
 export const useDraggable = () => {
 	const [position, setPosition] = useState<Position>({

@@ -47,6 +47,11 @@
 			"types": "./dist/input-hex-with-preview/index.d.ts",
 			"import": "./dist/input-hex-with-preview/index.js",
 			"require": "./dist/input-hex-with-preview/index.cjs"
+		},
+		"./input-image-select": {
+			"types": "./dist/input-image-select/index.d.ts",
+			"import": "./dist/input-image-select/index.js",
+			"require": "./dist/input-image-select/index.cjs"
 		}
 	},
 	"files": [

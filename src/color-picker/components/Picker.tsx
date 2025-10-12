@@ -31,6 +31,7 @@ const Picker = ({
 
 	return (
 		<div
+			className="bg-white dark:bg-gray-800"
 			style={{ userSelect: 'none' }}
 			id={`rbgcp-color-picker${pickerIdSuffix}`}
 		>

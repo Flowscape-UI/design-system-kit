@@ -38,7 +38,6 @@ export interface InputNumberSelectProps
 	isDisabledMouseEvent?: boolean
 }
 
-
 export const InputNumberSelect = React.forwardRef<
 	HTMLInputElement,
 	InputNumberSelectProps
@@ -328,10 +327,10 @@ export const InputNumberSelect = React.forwardRef<
 				return (
 					<span
 						className={cn(
-						'text-sm font-medium select-none',
-						INPUT_THEME_CLASSES.light.icon,
-						INPUT_THEME_CLASSES.dark.icon
-					)}
+							'text-sm font-medium select-none',
+							INPUT_THEME_CLASSES.light.icon,
+							INPUT_THEME_CLASSES.dark.icon
+						)}
 					>
 						{icon}
 					</span>
@@ -339,7 +338,10 @@ export const InputNumberSelect = React.forwardRef<
 			}
 			return (
 				<FaRegDotCircle
-					className={cn(INPUT_THEME_CLASSES.light.icon, INPUT_THEME_CLASSES.dark.icon)}
+					className={cn(
+						INPUT_THEME_CLASSES.light.icon,
+						INPUT_THEME_CLASSES.dark.icon
+					)}
 				/>
 			)
 		}, [icon])

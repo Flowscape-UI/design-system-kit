@@ -200,7 +200,10 @@ export const alphaToHex = (alpha: number): string => {
  * @param maxLength - Максимальная длина (по умолчанию 6)
  * @returns Отфильтрованная hex строка
  */
-export const filterHexInput = (value: string, maxLength: number = 6): string => {
+export const filterHexInput = (
+	value: string,
+	maxLength: number = 6
+): string => {
 	return value
 		.replace(/[^0-9a-fA-F]/g, '')
 		.slice(0, maxLength)

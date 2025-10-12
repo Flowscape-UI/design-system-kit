@@ -40,7 +40,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 		const iconElement = React.isValidElement(icon)
 			? React.cloneElement(icon as React.ReactElement<{ size?: number }>, {
 					size: iconSize,
-			  })
+				})
 			: icon
 
 		return (

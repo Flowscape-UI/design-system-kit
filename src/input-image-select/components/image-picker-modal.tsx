@@ -240,7 +240,7 @@ export const ImagePickerModal = ({
 		>
 			<div className={cn('w-[280px]', className)}>
 				<div className="flex items-center justify-end mb-2">
-					{isRotateButtonActive && (
+					{isRotateButtonActive && imageUrl && (
 						<button
 							type="button"
 							onClick={handleRotate}

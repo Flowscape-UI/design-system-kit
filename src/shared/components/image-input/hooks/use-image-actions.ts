@@ -18,7 +18,6 @@ export const useImageActions = (
 	const [isHidden, setIsHidden] = useState(false)
 	const [isRotateButtonActive, setIsRotateButtonActive] = useState(true)
 
-
 	const handleToggleHide = () => {
 		const newHiddenState = !isHidden
 		const newRotateButtonState = !isRotateButtonActive

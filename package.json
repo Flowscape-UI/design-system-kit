@@ -100,19 +100,8 @@
 		"lint": "eslint . --ext .ts,.tsx --max-warnings 0",
 		"lint:ts": "tsc --noEmit",
 		"format": "prettier --write \"src/**/*.{ts,tsx,json,md}\"",
-		"format:check": "prettier --check \"src/**/*.{ts,tsx,json,md}\"",
-		"prepublishOnly": "npm run build",
-		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
-		"build-storybook:gh-pages": "STORYBOOK_BASE_HREF=/design-system-kit/ storybook build",
-		"deploy:storybook": "npm run build-storybook:gh-pages && touch storybook-static/.nojekyll && gh-pages -d storybook-static",
-		"prepare": "husky",
-		"version:patch": "npm version patch -m 'chore(release): %s'",
-		"version:minor": "npm version minor -m 'chore(release): %s'",
-		"version:major": "npm version major -m 'chore(release): %s'",
-		"release:patch": "npm run version:patch && git push --follow-tags",
-		"release:minor": "npm run version:minor && git push --follow-tags",
-		"release:major": "npm run version:major && git push --follow-tags"
+		"build-storybook:gh-pages": "STORYBOOK_BASE_HREF=/design-system-kit/ storybook build"
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",
@@ -133,7 +122,6 @@
 		"eslint-plugin-react-hooks": "^6.1.1",
 		"gh-pages": "^6.3.0",
 		"globals": "^16.4.0",
-		"husky": "^9.1.7",
 		"lucide-react": "^0.544.0",
 		"prettier": "^3.6.2",
 		"react": ">=18",

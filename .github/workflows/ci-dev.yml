@@ -1,11 +1,20 @@
-name: CI (dev)
+name: Deploy Storybook (dev)
 
 on:
   push:
     branches: [dev]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-dev
+  cancel-in-progress: true
+
 jobs:
-  checks:
+  deploy-storybook:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,14 +26,23 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Build Storybook for GitHub Pages
+        run: npm run build-storybook:gh-pages
 
-      - name: Typecheck
-        run: npm run lint:ts
+      - name: Add .nojekyll
+        run: touch storybook-static/.nojekyll
 
-      - name: Build
-        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

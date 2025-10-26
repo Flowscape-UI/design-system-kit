@@ -4,7 +4,7 @@ import {
 	hexToRgb,
 	parseColor,
 	rgbToHex,
-} from '../utils/color-utils'
+} from '../../shared/utils/color-utils'
 
 interface UseColorPickerStateProps {
 	value: string

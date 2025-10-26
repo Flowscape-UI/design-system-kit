@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { FaRegDotCircle } from 'react-icons/fa'
 import { Input } from '../input'
+import { INPUT_THEME_CLASSES } from '../shared/constants/input-theme'
 import { cn } from '../shared/utils/cn'
 import { removeTrailingZeros } from '../shared/utils/remove-trailing-zeros'
 
@@ -36,22 +37,6 @@ export interface InputNumberSelectProps
 	classNameIcon?: string
 	isDisabledMouseEvent?: boolean
 }
-
-const THEME_CLASSES = {
-	light: {
-		container: 'bg-white border-gray-300 focus-within:ring-blue-500',
-		input: 'text-gray-900',
-		icon: 'text-gray-600',
-		dragArea: 'bg-gray-100 hover:bg-gray-200',
-	},
-	dark: {
-		container:
-			'dark:bg-gray-800 dark:border-gray-600 dark:focus-within:ring-blue-400',
-		input: 'dark:text-gray-100',
-		icon: 'dark:text-gray-300',
-		dragArea: 'dark:bg-gray-700 dark:hover:bg-gray-600',
-	},
-} as const
 
 export const InputNumberSelect = React.forwardRef<
 	HTMLInputElement,
@@ -343,8 +328,8 @@ export const InputNumberSelect = React.forwardRef<
 					<span
 						className={cn(
 							'text-sm font-medium select-none',
-							THEME_CLASSES.light.icon,
-							THEME_CLASSES.dark.icon
+							INPUT_THEME_CLASSES.light.icon,
+							INPUT_THEME_CLASSES.dark.icon
 						)}
 					>
 						{icon}
@@ -353,7 +338,10 @@ export const InputNumberSelect = React.forwardRef<
 			}
 			return (
 				<FaRegDotCircle
-					className={cn(THEME_CLASSES.light.icon, THEME_CLASSES.dark.icon)}
+					className={cn(
+						INPUT_THEME_CLASSES.light.icon,
+						INPUT_THEME_CLASSES.dark.icon
+					)}
 				/>
 			)
 		}, [icon])
@@ -362,8 +350,8 @@ export const InputNumberSelect = React.forwardRef<
 			<div
 				className={cn(
 					'inline-flex items-center overflow-hidden rounded-lg border-2 focus-within:ring-1 focus-within:ring-ring',
-					THEME_CLASSES.light.container,
-					THEME_CLASSES.dark.container,
+					INPUT_THEME_CLASSES.light.container,
+					INPUT_THEME_CLASSES.dark.container,
 					{
 						'flex-col w-20': orientation === 'vertical',
 						'h-8': orientation === 'horizontal',
@@ -377,8 +365,8 @@ export const InputNumberSelect = React.forwardRef<
 					onPointerDown={handlePointerDown}
 					className={cn(
 						'flex items-center justify-center',
-						THEME_CLASSES.light.dragArea,
-						THEME_CLASSES.dark.dragArea,
+						INPUT_THEME_CLASSES.light.dragArea,
+						INPUT_THEME_CLASSES.dark.dragArea,
 						{
 							'aspect-square h-full': orientation === 'horizontal',
 							'w-full h-8': orientation === 'vertical',
@@ -404,8 +392,8 @@ export const InputNumberSelect = React.forwardRef<
 					inputMode="decimal"
 					className={cn(
 						'w-full rounded-none border-none bg-transparent text-center px-2 py-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-						THEME_CLASSES.light.input,
-						THEME_CLASSES.dark.input,
+						INPUT_THEME_CLASSES.light.input,
+						INPUT_THEME_CLASSES.dark.input,
 						{
 							'h-8': orientation === 'vertical',
 							'h-full': orientation === 'horizontal',
@@ -424,8 +412,8 @@ export const InputNumberSelect = React.forwardRef<
 					<div
 						className={cn(
 							'px-2 text-xs font-medium select-none',
-							THEME_CLASSES.light.icon,
-							THEME_CLASSES.dark.icon
+							INPUT_THEME_CLASSES.light.icon,
+							INPUT_THEME_CLASSES.dark.icon
 						)}
 					>
 						{unit}

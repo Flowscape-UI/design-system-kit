@@ -36,7 +36,7 @@ const Opacity = () => {
 		x = Math.max(0, Math.min(x, boundingBox.current.width))
 
 		const newO = x / boundingBox.current.width
-		const newColor = `rgba(${r}, ${g}, ${b}, ${newO})`
+		const newColor = `rgba(${r}, ${g}, ${b}, ${newO.toFixed(2)})`
 		handleChange(newColor)
 
 		const handleLeft = Math.max(0, Math.min(x - 9, squareWidth - 18))

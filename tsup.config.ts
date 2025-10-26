@@ -15,13 +15,14 @@ export default defineConfig({
 		'shared/index': 'src/shared/index.ts',
 	},
 	format: ['esm', 'cjs'],
-	dts: true,
-	sourcemap: false,
+	dts: true, // Generate full TypeScript declarations
+	sourcemap: false, // No source maps in production
 	clean: true,
 	target: 'es2020',
 	treeshake: true,
-	minify: false, // Don't minify - code should be readable
+	minify: true, // Minify JS for smaller bundle, types stay readable
 	splitting: false,
+	keepNames: true, // Keep function/class names for better debugging
 	external: [
 		'react',
 		'react-dom',
